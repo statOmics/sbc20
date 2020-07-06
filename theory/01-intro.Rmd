@@ -1,5 +1,5 @@
 ---
-title: "1. Introduction: Why do we need statistics"
+title: "1. Introductie: Waarom Statistiek?"
 author: "Lieven Clement"
 date: "statOmics, Ghent University (https://statomics.github.io)"
 output:
@@ -66,77 +66,83 @@ ap
 
 ---
 
-## Data Exploration and Descriptive Statistics
+## Data Exploratie and beschrijvende Statistiek
 
-- Data exploration is extremely important to get insight in the data.
-- It is often underrated and overlooked.
+- Data exploratie is heel belangrijk om inzicht te krijgen in de data en is een essentiële eerste stap om te leren uit data.
+- Het wordt vaak ondergewaardeerd of over het hoofd gezien.
 
-### Descriptive statistics
-We first summarize the data and calculate the mean, standard deviation, number of observations and standard error and store the result in an object apRelSum via 'apRelSum<-`
+### Beschrijvende statistiek
 
-1. We pipe the `ap` dataframe to the group_by function to group the data by treatment trt `group_by(trt)`
-2. We pipe the result to the `summarize_at` function to summarize the "rel" variable and calculate the mean, standard deviation and the number of observations
-3. We pipe the result to the `mutate` function to make a new variable in the data frame `se` for which we calculate the standard error
+We vatten de data eerst samen. We berekenen het gemiddelde en de standaard deviatie (een maat voor de spreiding, zie volgende hoofdstukken).
+We slaan het resultaat hiervan op in het object apRelSum via `apRelSum <-`.
+
+1. We pipen (via `%>%`) het `ap` dataframe naar de `group_by` functie om de data te groeperen per treatment trt: `group_by(trt)`.
+2. We pipen het resultaat naar de `summarize_at` function om de "rel" variable samen te vatten en berekenen hierbij het gemiddelde en standaardafwijking. Omdat we de data eerst hebben gegroepeerd zullen we het gemiddelde en de standaard deviatie berekenen per groep.
+
 
 
 ```{r}
-apRelSum<-ap%>%
-  group_by(trt)%>%
+apRelSum <- ap %>%
+  group_by(trt) %>%
   summarize_at("rel",
-               list(mean=~mean(.,na.rm=TRUE),
-                    sd=~sd(.,na.rm=TRUE),
-                    n=function(x) x%>%is.na%>%`!`%>%sum)) %>%
-  mutate(se=sd/sqrt(n))
+               list(mean=mean,
+                    sd=sd
+                    )
+                )
+```
 
+We tonen vervolgens het resultaat door het object apRelSum aan te roepen
+
+```{r}
 apRelSum
 ```
 
+We kunnen ook een tabel in de webpagina of het pdf bestand integreren via het commando kable van het knitr pakket:
+
+```{r}
+knitr::kable(apRelSum)
+```
+
 ---
 
-### Plots
-We will use ggplot2 to make our plots.
-With the ggplot2 library we can easily build plots by adding layers.
+### Grafieken
+
+We maken in deze cursus gebruik van het pakket `ggplot2` om grafieken te maken.  
+Met de ggplot2 bibliotheek kunnen we gemakkelijk grafieken opbouwen in lagen (layers).
+Hierdoor leest de code veel makkelijker.
 
 #### barplot
 
-1. We pipe our summarized data to the `ggplot` function and we select the treatment variable trt and the variable mean for plotting `aes(x=trt,y=mean)`
+Bar plots worden heel veel gebruikt in artikels om resultaten weer te geven.
 
-2. We make a barplot based on this data using the `geom_bar` function. The statistic is `stat="identity"` because the bar height should be equal the value for the mean of the relative abundance.
+1. We pipen de samengevatte data naar de functie `ggplot`. Dat is de basis van elke ggplot.  We selecteren de variabele met de behandeling trt als x variabele en de variabele met naam mean als y-variabele voor de plot.
+We doen dit steeds via de aestetics `aes` functie.   `aes(x=trt,y=mean)`
 
-```{r}
-apRelSum%>%
-  ggplot(aes(x=trt,y=mean)) +
-  geom_bar(stat="identity")
-```
+2. We maken een barplot door een laag toe te voegen via de  `geom_bar` function. De statistiek is `stat="identity"` omdat de hoogte van de bar gelijk is aan de waarde voor y (hier het gemiddelde voor de relatieve abundantie).
 
-- Is this plot informative??
-
----
-
-We will now add standard errors to the plot
-using `geom_errorbar` function and specify the minimum and maximum value for of the error bar, the width command is used to set the width of the error bar smaller than the width of the bar.
+3. We voegen foutenvlaggen toe om de onzekerheid op het gemiddelde weer te geven.  We doen dit via de `geom_errorbar` functie en specifiëren het minimum en maximum van de error bar. Het `width` argument wordt gebruikt om de breedte van de error bar smaller te maken dat deze van de bar.
 
 ```{r}
 apRelSum%>%
   ggplot(aes(x=trt,y=mean)) +
   geom_bar(stat="identity") +
-  geom_errorbar(aes(ymin=mean-se,ymax=mean+se),width=.2)
+  geom_errorbar(aes(ymin=mean-sd,ymax=mean+sd),width=.2)
 ```
 
-- Is this plot informative??
+- Is deze plot informatief??
 
 ---
 
 #### boxplots
 
-I consider barplots to be bad plots
+Zelf vind ik barplots geen goede grafieken:
 
-- They are not informative
-- They just visualize a two point summary of the data. It is better to do this in a table
-- They use a lot of space (e.g. from zero up to the minimum relative abundance) where no data are present.
+- Ze zijn niet informatief
+- Ze visulariseren een samenvatting van de data door twee punten: `two point summary`: gemiddelde en de standaard deviatie hierop en kunnen beter in een tabel worden opgenomen.
+- Ze verbruiken veel ruimte, b.v. van nul tot de kleinste waarde voor de relatieve abundantie) waar geen data in ligt.
 
-It is better to get a view on the distribution of the data. We can use a boxplot for this purpose.
-We first explain what a boxplot.
+Het is beter om de data zo ruw mogelijk voor te stellen zodat we inzicht krijgen in de verdeling van de gegevens.
+Hiervoor zullen we ondermeer boxplots gebruiken.
 
 ---
 
@@ -151,11 +157,11 @@ lines(c(1.1,1.3,1.3,1.1),c(rangeCl[2],rangeCl[2]+(max(fem$DirectChol)-rangeCl[2]
 
 ---
 
-We will now make a boxplot for the ap data
+We maken nu een boxplot voor de ap data
 
-1. We pipe the `ap` dataframe to the ggplot command
-2. We select the data with the command `ggplot(aes(x=trt,y=rel))`
-3. We add a boxplot with the command `geom_boxplot()`
+1. We pipen het `ap` dataframe naar `ggplot`
+2. We selecteren de data voor de plot via `ggplot(aes(x=trt,y=rel))`
+3. We voegen laag toe voor de boxplot dmv de functie `geom_boxplot()`
 
 ```{r}
 ap %>%  
@@ -163,16 +169,35 @@ ap %>%
   geom_boxplot()
 ```
 
+
 ---
 
-- Note, that we do not have so many observations.
+Merk op dat we de plot ook op kunnen slaan als een object.
 
-- It is always better to show the data as raw as possible!
+```{r}
+apBoxplot <- ap %>%  
+  ggplot(aes(x=trt,y=rel)) +
+  geom_boxplot()
+```
 
-We will now add the raw data to the plot.
+De plot wordt dan niet gemaakt.
 
-- Note that we set the outlier.shape=NA in the geom_boxplot function because because we will add all raw data anyway.
-- We add the raw data using `geom_point(position="jitter")`, with the argument position='jitter' we will add some random noise to the x coordinate so that we can see all data.
+Om de plot weer te geven kunnen we het object aanroepen
+
+```{r}
+apBoxplot
+```
+
+---
+
+- Merk op dat we niet zoveel gegevens hebben. Enkel 10 per groep.
+
+- Het is altijd beter om de data zo ruw mogelijk te tonen!
+
+Omdat er niet zoveel gegevens zijn kunnen we de data toevoegen aan de plot zonder dat die te druk wordt.
+
+- Merk op dat we het argument `outlier.shape` op NA (not available) zetten `outlier.shape=NA` in the `geom_boxplot` functie omdat we anders outliers twee keer weer zullen geven. Eerst via de boxplot laag en daarna omdat we een laag met alle ruwe data toevoegen aan de plot.
+- We geven de ruwe data weer via de  `geom_point(position="jitter")` functie. We gebruiken hierbij het argument position='jitter' zodat we wat random ruis toevoegen aan de x-cordinaat zodat de gegevens elkaar niet overlappen.
 
 ```{r}
 ap %>%  
@@ -181,21 +206,37 @@ ap %>%
   geom_point(position="jitter")
 ```
 
-This is an informative plot!
+Dit is een informatieve plot!
 
 ---
 
-## Some concepts
+Aangezien we de plot ook hebben opgeslagen konden we dit ook doen door de plot op te roepen en nog een laag toe te voegen.
 
-- Why do we need more than one student per group?
+```{r}
+apBoxplot +
+  geom_point(position="jitter")
+```
 
-- What are the meaning and the consequences of the term "randomly"?
+We hadden het resultaat ook opnieuw op kunnen slaan voor later hergebruik.
 
-- Consider two designs:
+```{r}
+apBoxplot <- apBoxplot +
+  geom_point(position="jitter")
+```
 
-1. A research assistant selects 20 male students with smelly armpits from his faculty.
+---
 
-2. A research assistant selects 20 random people with smelly armpits from the Belgian population.
+## Enkele concepten
+
+- Waarom hebben we meer dan 1 subject nodig per groep?
+
+- Wat wordt er bedoelt met de term random en wat zijn de consequenties hiervan?
+
+- Beschouw twee proefopzetten:
+
+1. Een onderzoeker selecteert 20 mannelijke studenten die last hebben van okselgeur van de faculteit.
+
+2. Een onderzoeker selecteert 20 random personen die last hebben van okselgeur van de Belgische populatie.
 
 ---
 
@@ -222,43 +263,56 @@ ap2 %>%
 
 ---
 
-- Design 1: smaller variability
+- Design 1: kleinere variabiliteit
 
-- Design 2: larger variability and lower relative abundance of *Staphylococcus*
+- Design 2: grotere variabiliteit en lagere relatieve abundanties van *Staphylococcus*
 
-- What is the best design?
-
----
-
-- Random sampling is closely related to the concept of the population or the scope of the study.
-
-- Based on a sample of subjects, the researchers want to come to conclusions that hold for
-
-    - all kinds of people
-    - only male students
-
-- Scope of the study should be well specified before the start of the study.
-
-- For the statistical analysis to be valid, it is required that the subjects are selected completely at random from the population to which we want to generalize our conclusions.
-
-- Selecting completely at random from a population implies:
-    - all subjects in the population should have the same probability of being selected in the sample,
-    - the selection of a subject in the sample should be independent from the selection of the other subjects in the sample.
-
-- The sample is thus supposed to be representative for the population, but still it is random.
-
-- What does this imply?
+- Wat is het beste design?
 
 ---
 
-# Sample to sample variability
+- Randomisatie is sterk gerelateerd met het concept van de populatie en scope van de studie.  
+
+- Op basis van de steekproef kunnen de onderzoekers conclusies trekken over
+
+    - Mannelijke studenten in de faculteit wetenschappen
+    - Mensen van de Belgische populatie
+
+- De scope van de studie moet goed worden omschreven voor de start van het experiment.
+
+- Omdat de statistische analyse valide zou zijn is het noodzakelijk dat de subjecten volledig random worden getrokken van de populatie naar waar we onze conclusies wensen te veralgemenen.
+
+- Volledig random trekken van de populatie impliceert dat:
+
+    - alle subjecten van de populatie evenveel kans hebben om in de steekproef te worden opgenomen
+    - de selectie van een subject onafhankelijk is van de andere subjecten in de steekproef.
+
+
+- De steekproef is dan representatief voor de populatie, maar is nog steeds random.
+
+- Wat betekent dit?
+
+---
+
+# Variabiliteit van steekproef tot steekproef
+
+- Om te begrijpen dat een steekproef random is zouden we hetzelfde experiment veel keer moeten kunnen herhalen (`repeated sampling`).
+
+- Dan zouden we inzicht kunnen krijgen hoe de gegevens veranderen van steekproef tot steekproef.
+
+- Om dit te illustreren zullen we gebruik maken van een hele grote studie.
+
+- Uit die studie zullen we dan herhaaldelijk kleine steekproeven trekken om te begrijpen hoe de gegevens en statistieken veranderen van steekproef tot steekproef. Of om met andere woorden na te gaan wat de variabiliteit is tussen steekproeven.
+
+---
 
 National Health NHanes study
 
-  - Since 1960 individuals of all ages are interviewed in their homes every year
-  - The health examination component of the survey is conducted in a mobile examination centre (MEC).
-  - We will use this large study to select random subjects from the American population.
-  - This will help us to understand how the results of an analysis and the conclusions vary from sample to sample.
+  - Sinds 1960 worden elk jaar mensen van alle leeftijden geïnterviewd bij hen thuis.
+  - Er maakt ook een gezondheidsonderzoek deel uit van de study die in een mobiel onderzoekscentrum wordt afgenomen.
+  - We zullen deze grote studie gebruiken om at random personen te selecteren van de Amerikaanse populatie.
+  - Dat zal inzicht geven in hoe de gegevens en resultaten van een analyse zullen variëren van steekproef tot steekproef.
+  - De data van deze studie is terug te vinden in het R pakket `NHANES`
 
 ---
 
@@ -270,17 +324,17 @@ glimpse(NHANES)
 
 ---
 
-## Data exploration
+## Data exploratie
 
 
-Suppose that we are interested in assessing the difference in direct cholesterol levels between males and females older than 25 years.
+Stel dat we geïnteresseerd zijn om te onderzoeken hoe de directe cholestorol concentratie verschilt tussen mannen en vrouwen die ouder zijn dan 25 jaar.
 
-1. We pipe the dataset to the function `filter` to filter the data according to age.
-2. We plot the direct cholesterol levels.
-    - We select the data with the command `ggplot(aes(x=DirectChol))`
-    - We add a histogram with the command `geom_histogram()`
-    - We make to vertical panels using the command `facet_grid(Gender~.)`
-    - We customize the label of the x-axis with the `xlab` command.
+1. We pipen de dataset naar de function `filter` om de data te filteren volgens leeftijd.  
+2. We plotten de directe cholesterol metingen.
+    - We selecteren de data data met het commando `ggplot(aes(x=DirectChol))`
+    - We voegen een histogram toe met het commando `geom_histogram()`
+    - We maken twee vertikale panels met het commando `facet_grid(Gender~.)`
+    - We veranderen het label van de x-as met de `xlab` functie.
 
 ```{r}
 NHANES%>%filter(Age>25)%>%
@@ -292,9 +346,9 @@ NHANES%>%filter(Age>25)%>%
 
 ---
 
-- Cholesterol levels and concentration measurements are often skewed.
-- Concentrations cannot be lower than 0.
-- They are often log transformed.
+- Cholestorol metingen en concentratie metingen in het algemeen zijn vaak scheef verdeeld.
+- Concentraties kunnen niet lager zijn dan 0.  
+- Ze worden dikwijls log getransformeerd.
 
 ```{r}
 NHANES%>%
@@ -305,15 +359,16 @@ NHANES%>%
   xlab("Direct cholesterol (log2)")
 ```
 
-We see that the data are more or less bell shaped upon log transformation.
+We zien dat de data nu min of meer symmetrisch verdeeld zijn en een klokvorm hebben.  
+Dat zal ons toe laten om de data verder samen te vatten door gebruik te maken van twee statistieken: het gemiddelde en de standaard deviatie wat een maat is voor de spreiding van de (log-getransformeerde) gegevens rond het gemiddelde.
 
 ---
 
-We will now create a subset of the data that we will use to sample from in the next sections.
+We maken nu een subset van de data die we zullen gebruiken om aan te tonen hoe de variabiliteit in kleine steekproeven kan variëren van steekproef tot steekproef.
 
-  1. We filter on age and remove subjects with missing values (NA).
-  2. We only select the variables Gender and DirectChol from the dataset to avoid unnecessary variables.
-  3. With the mutate function we can add a new variable logChol with log transformed direct cholesterol levels.
+  1. We filteren op leeftijd en verwijderen ontbrekenden gegevens (NA, Not Available).
+  2. We selecteren enkel het geslacht en Direct Cholestorol zodat de dataset geen onnodige variabelen bevat.
+  3. Met de functie mutate maken we een nieuwe variabele aan met de log getranformeerde directe cholestorol metingen.
 
 ```{r}
 nhanesSub<- NHANES%>%
@@ -324,17 +379,17 @@ nhanesSub<- NHANES%>%
 
 ---
 
-We will calculate the summary statistics for the cholLog variable for males and females in the large dataset.
-So we group by Gender
+We berekenen het gemiddelde en de standaard deviatie voor de cholLog variable voor mannen en vrouwen in de grote dataset.
+We groeperen de data hiervoor op basis van het geslacht (variable Gender).
+
 
 ```{r}
-cholLogSum<- nhanesSub %>%
+cholLogSum <- nhanesSub %>%
   group_by(Gender) %>%
    summarize_at("cholLog",
-               list(mean=~mean(.,na.rm=TRUE),
-                    sd=~sd(.,na.rm=TRUE),
-                    n=function(x) x%>%is.na%>%`!`%>%sum)) %>%
-  mutate(se=sd/sqrt(n))
+               list(mean=mean,
+                    sd=sd)
+                )
 
 cholLogSum
 ```
@@ -343,31 +398,37 @@ cholLogSum
 
 ## Experiment
 
-- Suppose that we have no access to cholesterol levels of the American population,
-- we will have to setup an experiment.
-- Suppose we have a budget for assessing 10 females and 10 males,
-- we will subset 10 females and 10 males at random from the American population and measure their direct cholesterol levels.
+- Stel dat we geen toegang hebben tot de cholestorol niveau's van de Amerikaanse populatie.
+- We zouden dan een experiment op moeten zetten om cholestorol metingen bij mannen en vrouwen te doen.
+- Veronderstel dat we budget hebben om metingen bij 10 mannen en 10 vrouwen te doen.
+- We zouden dan 10 mannen en 10 vrouwen boven de 25 jaar at random selecteren uit de Amerikaanse populatie.
+- We kunnen dit experiment simuleren door 10 vrouwen en 10 mannen at random te bemonsteren uit de nhanes studie.
 
 ```{r}
-fem<-nhanesSub%>%filter(Gender=="female")%>%sample_n(size=10)
-mal<-nhanesSub%>%filter(Gender=="male")%>%sample_n(size=10)
+fem <- nhanesSub %>%
+  filter(Gender=="female") %>%
+  sample_n(size=10)
 
-samp<-rbind(fem,mal)
+mal <- nhanesSub %>%
+  filter(Gender=="male") %>%
+  sample_n(size=10)
+
+samp <- rbind(fem,mal)
 samp
 ```
 
 ---
 
-We will now plot the data with a histogram and boxplots
+We maken nu een histogram en een boxplot voor de data van het experiment.
 
 ```{r}
 samp %>%
-  ggplot(aes(x=cholLog))+
+  ggplot(aes(x=cholLog)) +
   geom_histogram(binwidth = .1) +
   facet_grid(Gender~.) +
   xlab("Direct cholesterol (log2)")
 
-samp%>%
+samp %>%
   ggplot(aes(x=Gender,y=cholLog)) +
   geom_boxplot(outlier.shape=NA) +
   geom_point(position="jitter")
@@ -375,30 +436,45 @@ samp%>%
 
 ---
 
-We summarize the data
+We vatten de data samen.
+
 ```{r}
-samp %>%
-  group_by(Gender) %>%
+cholLogSumExp1 <- samp %>%
+   group_by(Gender) %>%
    summarize_at("cholLog",
-               list(mean=~mean(.,na.rm=TRUE),
-                    sd=~sd(.,na.rm=TRUE),
-                    n=function(x) x%>%is.na%>%`!`%>%sum)) %>%
-  mutate(se=sd/sqrt(n))
+               list(mean=mean,
+                    sd=sd)
+                )
+
+cholLogSumExp1  
 ```
 
-Note that the sample mean is different from that of the large experiment ("population") we sampled from.
-
-We test for the difference between Males and females
+Merk op dat de gemiddelden anders zijn dan deze voor het grote experiment waarvan we de gegevens hebben gesampled.
 
 ```{r}
-t.test(cholLog~Gender,samp,var.equal=TRUE)
+cholLogSum
+cholLogSum$mean[2]-cholLogSum$mean[1]
 ```
+
+Gezien de grootte van de steekproef (`r sum(nhanesSub$Gender=="female")` vrouwen en `sum(nhanesSub$Gender=="male")` mannen) in de NHANES studie zijn gemiddelden die we bekomen uit de volledige studie heel nauwkeurig. Wanneer we kleine steekproef trekken van volledige NHANES studie dan kunnen we veronderstellen dat we deze steekproef getrokken is uit een populatie waarvoor de het gemiddelde log cholestorol niveau voor mannen en vrouwen boven de 25 gelijk is aan deze bekomen op basis van de volledige NHANES studie.
+
+In de "populatie" is de log cholestorol concentratie gemiddeld `r cholLogSum$mean[1]-cholLogSum$mean[2]` eenheden hoger bij vrouwen dan bij mannen.
+
+We berekenen het verschil in gemiddelde tussen vrouwen en mannen op basis van de gegevens in ons experiment.
+
+```{r}
+cholLogSumExp1$mean[2]-cholLogSumExp1$mean[1]
+```
+
+Op basis van ons experiment schatten we dat de log cholestorol concentratie gemiddeld `r cholLogSumExp1$mean[1]-cholLogSumExp1$mean[2]` eenheden op log schaal `r ifelse(cholLogSumExp1$mean[1]>cholLogSumExp1$mean[2],"hoger","lager")` bij vrouwen dan bij mannen.
+
+Indien we een statistische test uitvoeren (zie hoofdstuk 5: Statistische besluitvorming) kunnen we op basis van de kleine steekproef besluiten dat het gemiddeld cholestorol niveau op log schaal `r ifelse(t.test(cholLog~Gender,samp,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")` verschillend is tussen mannen en vrouwen.
 
 ---
 
-## Repeat the experiment
+## Herhaal het experiment
 
-If we do the experiment again we select other people and we obtain different results.
+Als we het experiment herhalen selecteren we andere mensen en verkrijgen we andere resultaten.
 
 
 ```{r}
@@ -406,27 +482,26 @@ fem<-nhanesSub%>%filter(Gender=="female")%>%sample_n(size=10)
 mal<-nhanesSub%>%filter(Gender=="male")%>%sample_n(size=10)
 
 samp2<-rbind(fem,mal)
-samp2%>%
-  ggplot(aes(x=DirectChol%>%log))+
-  geom_histogram(binwidth = .1) +
-  facet_grid(Gender~.) +
-  xlab("Direct cholesterol (log)")
 
 samp2%>%
   ggplot(aes(x=Gender,y=cholLog)) +
   geom_boxplot(outlier.shape=NA) +
   geom_point(position="jitter")
 
-samp2 %>%
+cholLogSumExp2 <- samp2 %>%
   group_by(Gender) %>%
-   summarize_at("cholLog",
-               list(mean=~mean(.,na.rm=TRUE),
-                    sd=~sd(.,na.rm=TRUE),
-                    n=function(x) x%>%is.na%>%`!`%>%sum)) %>%
-  mutate(se=sd/sqrt(n))
+  summarize_at("cholLog",
+                 list(mean=mean,
+                      sd=sd)
+                  )
 
-t.test(cholLog~Gender,samp2,var.equal=TRUE)
+cholLogSumExp2
 ```
+
+Op basis van het tweede experiment schatten we dat de log cholestorol concentratie gemiddeld `r cholLogSumExp2$mean[1]-cholLogSumExp2$mean[2]` eenheden op log schaal `r ifelse(cholLogSumExp2$mean[1]>cholLogSumExp2$mean[2],"hoger","lager")` bij vrouwen dan bij mannen.
+
+Indien we een statistische test uitvoeren (zie hoofdstuk 5: Statistische besluitvorming) kunnen we op basis van de kleine steekproef besluiten dat het gemiddeld cholestorol niveau op log schaal `r ifelse(t.test(cholLog~Gender,samp2,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")` verschillend is tussen mannen en vrouwen.
+
 
 ---
 
@@ -434,136 +509,178 @@ t.test(cholLog~Gender,samp2,var.equal=TRUE)
 
 ```{r}
 set.seed(12857)
-fem<-nhanesSub%>%filter(Gender=="female")%>%sample_n(size=10)
-mal<-nhanesSub%>%filter(Gender=="male")%>%sample_n(size=10)
+fem <- nhanesSub%>%filter(Gender=="female")%>%sample_n(size=10)
+mal <- nhanesSub%>%filter(Gender=="male")%>%sample_n(size=10)
 
 samp3<-rbind(fem,mal)
-samp3%>%
-  ggplot(aes(x=DirectChol%>%log))+
-  geom_histogram(binwidth = .1) +
-  facet_grid(Gender~.) +
-  xlab("Direct cholesterol (log)")
 
 samp3%>%
   ggplot(aes(x=Gender,y=cholLog)) +
   geom_boxplot(outlier.shape=NA) +
   geom_point(position="jitter")
 
-
-samp3 %>%
+cholLogSumExp3 <- samp3 %>%
   group_by(Gender) %>%
-   summarize_at("cholLog",
-               list(mean=~mean(.,na.rm=TRUE),
-                    sd=~sd(.,na.rm=TRUE),
-                    n=function(x) x%>%is.na%>%`!`%>%sum)) %>%
-  mutate(se=sd/sqrt(n))
+  summarize_at("cholLog",
+                   list(mean=mean,
+                        sd=sd)
+                    )
 
-t.test(cholLog~Gender,samp3,var.equal=TRUE)
+cholLogSumExp3
 ```
+
+Op basis van het derde experiment schatten we dat de log cholestorol concentratie gemiddeld `r cholLogSumExp3$mean[1]-cholLogSumExp3$mean[2]` eenheden op log schaal `r ifelse(cholLogSumExp3$mean[1]>cholLogSumExp3$mean[2],"hoger","lager")` bij vrouwen dan bij mannen !?
+
+Indien we een statistische test uitvoeren (zie hoofdstuk 5: Statistische besluitvorming) kunnen we op basis van de kleine steekproef besluiten dat het gemiddeld cholestorol niveau op log schaal `r ifelse(t.test(cholLog~Gender,samp3,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")` verschillend is tussen mannen en vrouwen.
 
 ---
 
 ## Summary
 
-- Because we sampled other subjects in each sample, we obtain different cholesterol levels.
-- However, not only the cholesterol levels differ from sample to sample but also the summary statistics: means, standard deviations and standard errors.
-- Note, that in the last sample the log cholesterol levels are on average lower for females than for males; based on this sample we even would wrongly conclude that the cholesterol levels for females are on average larger than those of males.
+- Omdat we at random andere proefpersonen in elke steekproef selecteren uit de populatie bekomen we andere cholestorol concentraties.
 
-- This implies that our conclusions are also subjected to uncertainty and might change from sample to sample.
+- Hierdoor zullen niet enkel de cholestorol niveaus van steekproef tot steekproef van elkaar verschillen maar ook de gemiddeldend, de standaard deviates en de standaard errors.
 
-- Samples as the one where the effect swaps and is statistically significant, however, are very rare.
-- This is illustrated with the code below, where we will draw 20000 repeated samples with sample size 10 for females and males from the NHanes study.
+- Merk op dat in de laatste steekproef de cholestorol concentratie op log schaal gemiddeld lager was voor vrouwne dan voor mannen, terwijl dat omgekeerd is in de populatie. Bovendien was dit verschil statistisch significant waardoor we op basis van deze steekproef foutief zouden concluderen dat het gemiddeld cholestorol niveau voor vrouwen statistisch significant lager is dan voor mannen.
+
+- Dat impliceert dat ook onze conclusies onzeker zijn en van steekproef tot steekproef kunnen wijzigen.
+
+- Steekproeven waarbij het effect omkeert en waarbij we besluiten dat het verschil significant is zijn heel zeldzaam. Omdat we met statistiek net de kans op het trekken foute conclusies gaan proberen te controleren.
+
+- Dit wordt in de onderstaande code geïllustreerd. We trekken 20000 herhaalde steekproeven van 10 vrouwen en 10 mannen uit de NHANES studie.
 
 ```{r}
-nsim<-20000
-nSamp<-10
-res<-matrix(0,nrow=nsim,ncol=2)
+# Aantal simulaties en steekproefgrootte per groep
+nSim <- 20000
+nSamp <- 10
+
+# We filteren de data vooraf zodat we dit niet telkens opnieuw hoeven te doen
 fem<-nhanesSub%>%filter(Gender=="female")
 mal<-nhanesSub%>%filter(Gender=="male")
 
-for (i in 1:nsim)
+# Simulatie studie
+# Om snelle functies te kunnen gebruiken nemen we eerst nSim steekproeven en berekenen we daarna alles.
+
+femSamps <- malSamps <-matrix(NA,nrow=nSamp,ncol=nSim)
+for (i in 1:nSim)
 {
- femSamp<-sample(fem$cholLog,nSamp)
- malSamp<-sample(mal$cholLog,nSamp)
-
-meanFem<-mean(femSamp)
- meanMal<-mean(malSamp)
- delta<-meanFem-meanMal
- sdFem<-sd(femSamp)
- sdMal<-sd(malSamp)
- seFem<-sdFem/sqrt(nSamp)
- seFem<-sdFem/sqrt(nSamp)
- sdPool<-sqrt((sdFem^2*(nSamp-1) + sdMal^2*(nSamp-1))/(2*nSamp-2))
-tvalue<-(delta)/(sdPool*sqrt(1/nSamp+1/nSamp))
-pvalue<-pt(abs(tvalue),lower.tail = FALSE,df=2*nSamp-2)*2
- res[i,]<-c(delta,pvalue)
+  femSamps[,i] <- sample(fem$cholLog,nSamp)
+  malSamps[,i] <- sample(mal$cholLog,nSamp)
 }
-sum(res[,2]<0.05&res[,1]>0)
-sum(res[,2]>0.05)
-sum(res[,2]<0.05&res[,1]<0)
 
-res<-res %>% as.data.frame
-names(res) <- c("delta","pvalue")
+res <- data.frame(
+  verschil=colMeans(femSamps) - rowMeans(malSamps),
+  Rfast::ttests(femSamps,malSamps)
+  )
+
+sum(res$pvalue<0.05&res$verschil>0)
+sum(res$pvalue>=0.05)
+sum(res$pvalue<0.05&res$verschil<0)
+
+
 res %>%
-  ggplot(aes(x=delta,y=-log10(pvalue),color=pvalue<0.05)) +
+  ggplot(aes(x=verschil,y=-log10(pvalue),color=pvalue<0.05)) +
   geom_point() +
-  xlab("Average cholesterol difference") +
-  ylab("- log10(pvalue)") +
-  scale_color_manual(values=c("black","red"))
+  xlab("Gemiddeld Verschil (log2)") +
+  ylab("Statistische Significantie")
 
 res %>%
-  ggplot(aes(y=delta)) +
+  ggplot(aes(y=verschil)) +
   geom_boxplot() +
-  geom_point(aes(x=0,y=c(mean(fem$cholLog)-mean(mal$cholLog)),color="pop. diff")) +
+  geom_point(aes(x=0,y=c(mean(fem$cholLog)-mean(mal$cholLog)),color="Pop. Verschil"),size=3,pch=17) +
+  ylab("Gemiddeld Verschil (log2)")
   xlab("")
 ```
 
-Only in `r sum(res[,2]<0.05&res[,1]<0)` out of 20000 samples we conclude that the mean cholesterol level of males is significantly lower than for females. For the remaining samples the cholesterol levels for males were on average significantly lower than for females (`r sum(res[,2]<0.05&res[,1]>0)` samples) or the average difference in cholesterol levels were not statistically significant (`r sum(res[,2]>0.05)` samples). The latter is because the power is rather low to detect the difference with 10 samples in each group.
+Enkel in `r sum(res$pvalue<0.05&res$verschil<0)` van de 20000 steekproeven zouden we concluderen we dat het gemiddeld cholesterol concentratie van mannen significant hoger is dan van vrouwen.   
+Voor de overige steekproeven  is de cholesterol concentratrie voor mannen gemiddeld significant lager dan voor vrouwen (`r sum(res$pvalue<0.05&res$verschil>0)` steekproeven) of is het gemiddeld verschil statistisch niet significant (`r sum(res$pvalue>=0.05)` steekproeven).
+Het feit dat we in veel steekproeven resultaten vinden die statistisch niet significant zijn komt omdat de statistische toets een te lage kracht heeft om het verschil te detecteren wanneer er maar 10 observaties zijn per groep.
 
 ---
 
-## Assignment
+## Grotere steekproef?
 
-1. Copy the code chunk with the simulation study
-2. Add it here below
-3. Modify the sample size to 50.
-4. What do you observe?
+Wat gebeurt er als we de steekproef verhogen naar 50 observaties per groep?
+
+```{r}
+nSim <- 20000
+nSamp <- 50
+
+# We filteren de data vooraf zodat we dit niet telkens opnieuw hoeven te doen
+fem<-nhanesSub%>%filter(Gender=="female")
+mal<-nhanesSub%>%filter(Gender=="male")
+
+# Simulatie studie
+# Om snelle functies te kunnen gebruiken nemen we eerst nSim steekproeven en berekenen we daarna alles.
+
+femSamps <- malSamps <-matrix(NA,nrow=nSamp,ncol=nSim)
+for (i in 1:nSim)
+{
+  femSamps[,i] <- sample(fem$cholLog,nSamp)
+  malSamps[,i] <- sample(mal$cholLog,nSamp)
+}
+
+res <- data.frame(
+  verschil=colMeans(femSamps) - rowMeans(malSamps),
+  Rfast::ttests(femSamps,malSamps)
+  )
+
+sum(res$pvalue<0.05&res$verschil>0)
+sum(res$pvalue>=0.05)
+sum(res$pvalue<0.05&res$verschil<0)
+
+
+res %>%
+  ggplot(aes(x=verschil,y=-log10(pvalue),color=pvalue<0.05)) +
+  geom_point() +
+  xlab("Gemiddeld Verschil (log2)") +
+  ylab("Statistische Significantie")
+
+res %>%
+  ggplot(aes(y=verschil)) +
+  geom_boxplot() +
+  geom_point(aes(x=0,y=c(mean(fem$cholLog)-mean(mal$cholLog)),color="Pop. Verschil"),size=3,pch=17) +
+  ylab("Gemiddeld Verschil (log2)")
+  xlab("")
+```
 
 ---
 
 # Salk Study
 
-- In 1916, the US experienced the first large epidemic of polio.
-- John Salk developed a vaccine with promising results in the lab in the early fifties.
-- In 1954, the National Foundation
-for Infantile Paralysis (NFIP) has setup a large study to assess the effectiveness of the Salk vaccine.
-- Suppose that the NFIP would have vaccinated a large number of children in 1954 and would have observed that the polio incidence in 1954 was lower than in 1953. Could they have concluded that the vaccine was effective?
+- In 1916, brak de eerste grote polio epidemie uit in de USA.
+- Begin de jaren 50 ontwikkelde John Salk een vaccin met belovende resultaten in het lab.
+- In 1954, heeft de National Foundation
+for Infantile Paralysis (NFIP) een grote studie opgezet om de effectiviteit van het Salk vaccin na te gaan.
+- Veronderstel dat de NFIP in 1954 een groot aantal kinderen zou hebben gevaccineerd, wat zouden ze dan kunnen besluiten als de polio incidentie in 1954 lager was dan in 1953?
 
 ---
 
 ## NFIP Study
 ### Design
 
-- Large simultaneous study with cases, vaccinated children, and controls,  non-vaccinated children.
-- All schools in districts with high polio incidence
-- Cases: children with consent for vaccination from second grade of primary school.
-- Controls: children from  first and third grade.
+- Grote simultane studie met gevaccineerde kinderen (cases) en ongevaccineerde kinderen (controles).
+- In scholen van districten met hoge polio incidentie.
+- Cases: kinderen van de tweede graad van het lager onderwijs waarvan de ouders toestemden met vaccinatie.
+- Controles: kinderen van de eerste en derde graad.
 
 ### Data
 ```{r}
-nfip<-data.frame(group=c("cases","control","noConcent"),grade=c("g2","g1g3","g2"),vaccin=c("yes","no","no"),total=c(221998,725173,123605),polio=c(54,391,56))
+nfip<-data.frame(group=c("cases","controls","noConcent"),grade=c("g2","g1g3","g2"),vaccin=c("yes","no","no"),total=c(221998,725173,123605),polio=c(54,391,56))
 nfip$noPolio<-nfip$total-nfip$polio
 knitr::kable(nfip)
 ```
 
-Compare polio incidence?
+Vergelijk de polio incidentie?
 
-```{r, echo=FALSE, eval=FALSE}
+---
+
+```{r}
 nfip$incidencePM<-round(nfip$polio/nfip$total*1e6,0)
 knitr::kable(nfip)
 ```
 
-What can we conclude?
+Wat kunnen we concluderen?
 
 ---
 
@@ -578,30 +695,30 @@ arrows(x0=0,x1=0,y0=-1.4,y1=1.4,lwd=4)
 ```
 
 
-- We observe a lower polio (P) incidence for children for who no consent was given than for the children in the control group.
+- We observeren een lagere polio (P) incidentie voor kinderen bij wie de ouders geen toestemming gaven dan in de controle groep.  
 
-- Consent for vaccination (V) was associated with the socio-economic status (S).
+- Toestemming voor vaccinatie (V) is geassocieerd met de socio-economische status (S).
 
-- Children of lower socio-economic status were more resistant to the disease.
+- Kinderen van lagere socio-economische status zijn meer resistent tegen de ziekte.
 
-- The groups of cases and controls are not comparable:
-    - difference in age,
-    - difference in socio-economic status and
-    - difference in susceptible for disease.
+- De groepen van cases en controles zijn niet vergelijkbaar
+    - verschil in leeftijd
+    - verschil in socio-economische status en
+    - verschil in vatbaarheid voor de ziekte.
 
 ---
 
 ## Salk Study
 
 ### Design
-A new study was conducted: Randomized double blind study
+Een nieuwe studie werd uitgevoerd: dubbel blinde gerandomiseerde studie.
 
-  - Children are assigned at random to the control or case treatment arm after consent was given by the parents.
-  - Control: vaccination with placebo
-  - Treatment: vaccination with vaccine
+  - Kinderen worden at random toegewezen aan controle of case arm van het experiment nadat de ouders toestemden met vaccinatie.
+  - Controle: vaccinatie met placebo
+  - Treatment: vaccinatie met vaccine
   - double blinding:
-    - parents did not know if their child was vaccinated or received the placebo
-    - care-giver/researchers did not know if the child was vaccinated  or received placebo
+    - ouders en kinderen weten niet of ze werden gevaccineerd of niet
+    - medische staf en onderzoekers weten niet of het kind het vaccin of de placebo kreeg
 
 ---
 
@@ -615,16 +732,16 @@ salk$incidencePM<-round(salk$polio/salk$total*1e6,0)
 knitr::kable(salk)
 ```
 
-- We observe a much larger effect now that the cases and the controls are comparable, incidence of `r salk$incidencePM[1]`  and `r salk$incidencePM[2]` per million, respectively.
+- We observeren en veel groter effect nu dat cases en controles vergelijkbaar zijn, incidentie van respectievelijk `r salk$incidencePM[1]`  and `r salk$incidencePM[2]` per miljoen.
 
-- The polio incidence for children with no consent remains similar, `r nfip$incidencePM[3]` and `r salk$incidencePM[3]` per million in the NFIP and Salk study, respectively.
+- De polio incidentie voor kinderen die geen toestemming geven blijft vergelijkbaar  `r nfip$incidencePM[3]` and `r salk$incidencePM[3]` per miljoen respectievelijk in the NFIP and Salk study.
 
 ---
 
-# Scientific Method
+# Wetenschappelijke methode
 
-- Empirical data is key in the life sciences.
-- Research is largely driven by data.
+- Empirische data zijn cruciaal in de wetenschappen.  
+- Onderzoek wordt tegenwoordig gedreven door data .
 
 ```{r,echo=FALSE, fig.align = "center"}
 plot(0,0,col=0,xaxt="none",yaxt="none",axes=FALSE,xlab="",ylab="",cex=4,ylim=c(-.5,1.5),xlim=c(-.5,1.5))
@@ -639,41 +756,42 @@ text(0,0,"Model",cex=2,pos=2)
 text(0.5,-0.3,"Statistical\nInference",cex=2,col="darkred")
 ```
 
-- *Nature*: biological process which we study
+- *Natuur*: proces die we bestuderen
 
-- *Deduction*: deduce logical consequences of  the theory/hypothesis that can be experimentally validated.
+- *Deductie*: leid logische gevolgen af van een theorie of hypothese die experimenteel kan worden gevalideerd.
 
-- *Experiment*: collect data on the process. The data are a manifestation of the real process. The experiment has to be *representative* and *reproducible* and should challenge the theory. *Experimental Design*!
+- *Experiment*:  verzamel data over het proces. De data zijn een manifestatie van het werkelijk onderliggende proces. Het experiment moet *representatief* en *reproduceerbaar* zijn en moet de theorie/hypothese uitdagen. *Experimenteel Design*!
 
-- *Statistical inference*: Bridge to confront the model/hypothesis to the data $\rightarrow$ Cornerstone of the scientific method.
+- *Statistische besluitvorming (inferentie)*: brug om model/hypothese te confronteren met de data: is de *sluitsteen van de wetenschappelijke methode*
 
-- *Falsification principle*: Data cannot be used to prove a model/hypothesis, only to reject it.
+- *Falsificatie principe*: Data can niet worden gebruikt om een hypothese te bewijzen, ze kan een hypothese enkel ontkrachten.
 
-- *Data-exploration and analysis* is typically used to refine the theory and to generate new hypotheses.
+- *Data-exploratie en analyse* wordt gebruik om de theorie te verfijnen en om nieuwe hypotheses te genereren.
 
 ---
 
-# Role of Statistics in the Life Sciences
+# Rol van Statistiek
 
-- We have seen that
-    - it is important to carefully specify the scope of the study before the experiment,
-    - the sample size matters,
-    - we should be aware of confounding, and
-    - a proper control is required.
-
-$\rightarrow$ Good experimental design is crucial!
-
-- We also observed that there is variability in the population and because we can only sample a small part of the population our results and conclusions are subjected to uncertainty.
+- We hebben gezien dat
+    - het belangrijk is om de scope van de studie goed te specifiëren voor de start van het experiment.
+    - steekproef grootte is heel belangrijk
+    - we moeten ons bewust zijn van Confounding
+    - een goede controle is belangrijk
 
 
+$\rightarrow$ Goede proefopzet is cruciaal!
+
+- We hebben ook geobserveerd dat er variabiliteit is in de populatie en dat zorgt voor onzekerheid in de resultaten en de conclusies van een analyse omdat we slechts een kleine steekproef kunnen nemen uit de populatie.
 
 
-- Statistics is the science on
-    1. collecting (experimental design),
-    2. exploring (data exploration) and
-    3. learning from data and to generalize what we observe in the sample towards the population while quantifying, controlling and reporting variability and uncertainty (statistical modelling and statistical inference).
 
-- Therefore, statistics plays an important role in almost all sciences (e.g. column "points of significance" in Nature Methods. http://blogs.nature.com/methagora/2013/08/giving_statistics_the_attention_it_deserves.html)
+
+- Statistiek is de wetenschap voor het
+    1. verzamelen (experimenteel design),
+    2. exploren (data exploration) en
+    3. leren van data zodat we hetgeen we observeren in de steekproef zouden kunnen veralgemenen naar de populatie terwijl we de onzekerheid quantificeren, controleren en rapporteren (statistisch modelleren en statistische besluitvorming).
+
+- Statistiek speelt daarom een heel belangrijke rol in zowat alle wetenschappen (zie bijvoorbeeld de column "points of significance" in het hoog aangeschreven tijdschrift Nature Methods. http://blogs.nature.com/methagora/2013/08/giving_statistics_the_attention_it_deserves.html)
 
 ---
 
@@ -728,4 +846,4 @@ text(7.5,.5,"DATA EXPLORATION &\nDESCRIPTIVE STATISTICS (2)",col="black",cex=1.2
 
 ---
 
-# [Home](https://gtpb.github.io/PSLS20/) {-}
+# [Home](https://gtpb.github.io/sbc20/) {-}
