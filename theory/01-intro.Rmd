@@ -147,12 +147,13 @@ Hiervoor zullen we ondermeer boxplots gebruiken.
 ---
 
 ```{r fig.align='center',echo=FALSE}
-fem <- NHANES::NHANES %>% filter(Gender=="female" & !is.na(DirectChol)) %>% select(DirectChol)
-boxplot(fem$DirectChol, ylab="Direct cholesterol",cex.lab=1.5,cex.axis=1.5,cex.main=1.5)
-rangeCl<-quantile(fem$DirectChol,c(.25,.75))+c(-1,1)*diff(quantile(fem$DirectChol,c(.25,.75)))*1.5
-boxYs<-c(range(fem$DirectChol[fem$DirectChol<=rangeCl[2]&fem$DirectChol>=rangeCl[1]]),quantile(fem$DirectChol,c(.25,.5,.75)),rangeCl[2]+(max(fem$DirectChol)-rangeCl[2])/2)
-text(1.3,boxYs,labels=c("wisker","wisker","x25","mediaan","x75","outliers"),pos=4,cex=1.3)
-lines(c(1.1,1.3,1.3,1.1),c(rangeCl[2],rangeCl[2]+(max(fem$DirectChol)-rangeCl[2])/2,rangeCl[2]+(max(fem$DirectChol)-rangeCl[2])/2,max(fem$DirectChol)),lty=2)
+fem <- NHANES::NHANES %>% filter(Gender=="female" & !is.na(Height) & Age>18) %>% select(Height)
+boxplot(fem$Height, ylab="lengte (cm)",cex.lab=1.5,cex.axis=1.5,cex.main=1.5)
+rangeL<-quantile(fem$Height,c(.25,.75))+c(-1,1)*diff(quantile(fem$Height,c(.25,.75)))*1.5
+boxYs<-c(rangeL[1]+(min(fem$Height)-rangeL[1])/2,range(fem$Height[fem$Height<=rangeL[2]&fem$Height>=rangeL[1]]),quantile(fem$Height,c(.25,.5,.75)),rangeL[2]+(max(fem$Height)-rangeL[2])/2)
+text(c(0.5,rep(1.3,5),0.5),boxYs,labels=c("outliers","wisker","wisker","x25","mediaan","x75","outliers"),pos=4,cex=1.3)
+lines(c(0.9,.7,0.7,0.9),c(rangeL[2],rangeL[2]+(max(fem$Height)-rangeL[2])/2,rangeL[2]+(max(fem$Height)-rangeL[2])/2,max(fem$Height)),lty=2)
+lines(c(0.9,.7,0.7,0.9),c(rangeL[1],rangeL[1]+(min(fem$Height)-rangeL[1])/2,rangeL[1]+(min(fem$Height)-rangeL[1])/2,min(fem$Height)),lty=2)
 ```
 
 ---
@@ -226,9 +227,7 @@ apBoxplot <- apBoxplot +
 
 ---
 
-## Enkele concepten
-
-- Waarom hebben we meer dan 1 subject nodig per groep?
+## Randomisatie
 
 - Wat wordt er bedoelt met de term random en wat zijn de consequenties hiervan?
 
@@ -280,7 +279,7 @@ ap2 %>%
 
 - De scope van de studie moet goed worden omschreven voor de start van het experiment.
 
-- Omdat de statistische analyse valide zou zijn is het noodzakelijk dat de subjecten volledig random worden getrokken van de populatie naar waar we onze conclusies wensen te veralgemenen.
+- Omdat de statistische analyse valide zou zijn is het noodzakelijk dat de subjecten volledig random worden getrokken uit de populatie naar waar we onze conclusies wensen te veralgemenen.
 
 - Volledig random trekken van de populatie impliceert dat:
 
@@ -327,11 +326,12 @@ glimpse(NHANES)
 ## Data exploratie
 
 
-Stel dat we geïnteresseerd zijn om te onderzoeken hoe de directe cholestorol concentratie verschilt tussen mannen en vrouwen die ouder zijn dan 25 jaar.
+
+Onderzoeksvraag: hoe verschilt de lengte van volwassen mannen en vrouwen.
 
 1. We pipen de dataset naar de function `filter` om de data te filteren volgens leeftijd.  
-2. We plotten de directe cholesterol metingen.
-    - We selecteren de data data met het commando `ggplot(aes(x=DirectChol))`
+2. We plotten de lengte metingen.
+    - We selecteren de data data met het commando `ggplot(aes(x=lengte))`
     - We voegen een histogram toe met het commando `geom_histogram()`
     - We maken twee vertikale panels met het commando `facet_grid(Gender~.)`
     - We veranderen het label van de x-as met de `xlab` functie.
@@ -346,92 +346,109 @@ NHANES%>%filter(Age>25)%>%
 
 ---
 
-- Cholestorol metingen en concentratie metingen in het algemeen zijn vaak scheef verdeeld.
-- Concentraties kunnen niet lager zijn dan 0.  
-- Ze worden dikwijls log getransformeerd.
-
-```{r}
-NHANES%>%
-  filter(Age>25)%>%
-  ggplot(aes(x=DirectChol%>%log2))+
-  geom_histogram() +
-  facet_grid(Gender~.) +
-  xlab("Direct cholesterol (log2)")
-```
-
 We zien dat de data nu min of meer symmetrisch verdeeld zijn en een klokvorm hebben.  
-Dat zal ons toe laten om de data verder samen te vatten door gebruik te maken van twee statistieken: het gemiddelde en de standaard deviatie wat een maat is voor de spreiding van de (log-getransformeerde) gegevens rond het gemiddelde.
+Dat zal ons toe laten om de data verder samen te vatten door gebruik te maken van twee statistieken: het gemiddelde en de standaard deviatie wat een maat is voor de spreiding van de gegevens rond het gemiddelde.
 
 ---
 
 We maken nu een subset van de data die we zullen gebruiken om aan te tonen hoe de variabiliteit in kleine steekproeven kan variëren van steekproef tot steekproef.
 
   1. We filteren op leeftijd en verwijderen ontbrekenden gegevens (NA, Not Available).
-  2. We selecteren enkel het geslacht en Direct Cholestorol zodat de dataset geen onnodige variabelen bevat.
-  3. Met de functie mutate maken we een nieuwe variabele aan met de log getranformeerde directe cholestorol metingen.
+  2. We selecteren enkel het geslacht en Lengte zodat de dataset geen onnodige variabelen bevat.
 
 ```{r}
 nhanesSub<- NHANES%>%
-  filter(Age>25&!is.na(DirectChol)) %>%
-  select(c("Gender","DirectChol")) %>%
-  mutate(cholLog=log2(DirectChol))
+  filter(Age>25&!is.na(Height)) %>%
+  select(c("Gender","Height"))
 ```
 
 ---
 
-We berekenen het gemiddelde en de standaard deviatie voor de cholLog variable voor mannen en vrouwen in de grote dataset.
+We berekenen het gemiddelde en de standaard deviatie voor de lengte voor mannen en vrouwen in de grote dataset.
 We groeperen de data hiervoor op basis van het geslacht (variable Gender).
 
 
 ```{r}
-cholLogSum <- nhanesSub %>%
-  group_by(Gender) %>%
-   summarize_at("cholLog",
-               list(mean=mean,
-                    sd=sd)
-                )
 
-cholLogSum
+HeightSum <- nhanesSub %>%
+  group_by(Gender) %>%
+  summarize_at("Height",
+               list(mean=mean,
+               sd=sd)
+              )
+
+knitr::kable(
+  HeightSum %>%
+  mutate_if(is.numeric, round, digits=1)
+  )
 ```
 
 ---
 
 ## Experiment
 
-- Stel dat we geen toegang hebben tot de cholestorol niveau's van de Amerikaanse populatie.
-- We zouden dan een experiment op moeten zetten om cholestorol metingen bij mannen en vrouwen te doen.
-- Veronderstel dat we budget hebben om metingen bij 10 mannen en 10 vrouwen te doen.
-- We zouden dan 10 mannen en 10 vrouwen boven de 25 jaar at random selecteren uit de Amerikaanse populatie.
-- We kunnen dit experiment simuleren door 10 vrouwen en 10 mannen at random te bemonsteren uit de nhanes studie.
+- Stel dat we geen toegang hebben tot de metingen van de NHANES studie.
+
+- We zouden dan een experiment op moeten zetten om metingen bij mannen en vrouwen te doen.
+
+- Veronderstel dat we budget hebben om metingen bij 5 mannen en 5 vrouwen te doen.
+
+- We zouden dan 5 mannen en 5 vrouwen boven de 25 jaar at random selecteren uit de Amerikaanse populatie.
+
+- We kunnen dit experiment simuleren door 5 vrouwen en 5 mannen at random te selecteren uit de NHANES studie.
+
+---
 
 ```{r}
+set.seed(1000001)
+nSamp <- 5
 fem <- nhanesSub %>%
   filter(Gender=="female") %>%
-  sample_n(size=10)
+  sample_n(size=5)
 
 mal <- nhanesSub %>%
   filter(Gender=="male") %>%
-  sample_n(size=10)
+  sample_n(size=5)
 
-samp <- rbind(fem,mal)
-samp
+samp1 <- rbind(fem,mal)
+
+samp1
 ```
 
 ---
 
-We maken nu een histogram en een boxplot voor de data van het experiment.
+Data Exploratie
 
-```{r}
-samp %>%
-  ggplot(aes(x=cholLog)) +
-  geom_histogram(binwidth = .1) +
+```{r echo=FALSE,warning=FALSE,message=FALSE}
+samp1 %>%
+  ggplot(aes(x=Height)) +
+  geom_histogram() +
   facet_grid(Gender~.) +
-  xlab("Direct cholesterol (log2)")
+  xlab("Lengte (cm)")
 
-samp %>%
-  ggplot(aes(x=Gender,y=cholLog)) +
+  HeightSumExp1 <- samp1 %>%
+     group_by(Gender) %>%
+     summarize_at("Height",
+                 list(mean=mean,
+                      sd=sd)
+                  )
+```
+
+Histogram is niet zinvol als we maar zo weinig datapunten hebben.
+
+---
+
+
+Boxplot is beter:
+
+```{r echo=FALSE}
+samp1 %>%
+  ggplot(aes(x=Gender,y=Height)) +
   geom_boxplot(outlier.shape=NA) +
-  geom_point(position="jitter")
+  geom_point(position="jitter") +
+  geom_point(aes(x=1,y=mean(fem$Height)),size=3,pch=17,color="darkred") +
+  geom_point(aes(x=2,y=mean(mal$Height)),size=3,pch=17,color="darkred") +
+  ylab("Height (cm)")
 ```
 
 ---
@@ -439,36 +456,29 @@ samp %>%
 We vatten de data samen.
 
 ```{r}
-cholLogSumExp1 <- samp %>%
+HeightSumExp1 <- samp1 %>%
    group_by(Gender) %>%
-   summarize_at("cholLog",
+   summarize_at("Height",
                list(mean=mean,
                     sd=sd)
                 )
 
-cholLogSumExp1  
+HeightSumExp1
 ```
 
 Merk op dat de gemiddelden anders zijn dan deze voor het grote experiment waarvan we de gegevens hebben gesampled.
 
 ```{r}
-cholLogSum
-cholLogSum$mean[2]-cholLogSum$mean[1]
+HeightSum
 ```
-
-Gezien de grootte van de steekproef (`r sum(nhanesSub$Gender=="female")` vrouwen en `sum(nhanesSub$Gender=="male")` mannen) in de NHANES studie zijn gemiddelden die we bekomen uit de volledige studie heel nauwkeurig. Wanneer we kleine steekproef trekken van volledige NHANES studie dan kunnen we veronderstellen dat we deze steekproef getrokken is uit een populatie waarvoor de het gemiddelde log cholestorol niveau voor mannen en vrouwen boven de 25 gelijk is aan deze bekomen op basis van de volledige NHANES studie.
-
-In de "populatie" is de log cholestorol concentratie gemiddeld `r cholLogSum$mean[1]-cholLogSum$mean[2]` eenheden hoger bij vrouwen dan bij mannen.
 
 We berekenen het verschil in gemiddelde tussen vrouwen en mannen op basis van de gegevens in ons experiment.
 
 ```{r}
-cholLogSumExp1$mean[2]-cholLogSumExp1$mean[1]
+HeightSumExp1$mean[2]-HeightSumExp1$mean[1]
 ```
 
-Op basis van ons experiment schatten we dat de log cholestorol concentratie gemiddeld `r cholLogSumExp1$mean[1]-cholLogSumExp1$mean[2]` eenheden op log schaal `r ifelse(cholLogSumExp1$mean[1]>cholLogSumExp1$mean[2],"hoger","lager")` bij vrouwen dan bij mannen.
-
-Indien we een statistische test uitvoeren (zie hoofdstuk 5: Statistische besluitvorming) kunnen we op basis van de kleine steekproef besluiten dat het gemiddeld cholestorol niveau op log schaal `r ifelse(t.test(cholLog~Gender,samp,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")` verschillend is tussen mannen en vrouwen.
+In het experiment zijn vrouwen zijn gemiddeld `r round(abs(HeightSumExp1$mean[1]-HeightSumExp1$mean[2]),2)` cm `r ifelse(HeightSumExp1$mean[1]>HeightSumExp1$mean[2],"groter","kleiner")` dan mannen. En als we een statistische test uitvoeren (zie hoofdstuk 5: Statistische besluitvorming) kunnen we besluiten dat dit verschil statistisch `r ifelse(t.test(Height~Gender,samp1,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")` is.
 
 ---
 
@@ -478,85 +488,94 @@ Als we het experiment herhalen selecteren we andere mensen en verkrijgen we ande
 
 
 ```{r}
-fem<-nhanesSub%>%filter(Gender=="female")%>%sample_n(size=10)
-mal<-nhanesSub%>%filter(Gender=="male")%>%sample_n(size=10)
+fem <- nhanesSub %>%
+  filter(Gender=="female") %>%
+  sample_n(size=5)
 
-samp2<-rbind(fem,mal)
+mal <- nhanesSub %>%
+  filter(Gender=="male") %>%
+  sample_n(size=5)
 
-samp2%>%
-  ggplot(aes(x=Gender,y=cholLog)) +
+samp2 <- rbind(fem,mal)
+
+samp2 %>%
+  ggplot(aes(x=Gender,y=Height)) +
   geom_boxplot(outlier.shape=NA) +
-  geom_point(position="jitter")
+  geom_point(position="jitter") +
+  geom_point(aes(x=1,y=mean(fem$Height)),size=3,pch=17,color="darkred") +
+  geom_point(aes(x=2,y=mean(mal$Height)),size=3,pch=17,color="darkred") +
+  ylab("Lengte (cm)")
 
-cholLogSumExp2 <- samp2 %>%
+HeightSumExp2 <- samp2 %>%
   group_by(Gender) %>%
-  summarize_at("cholLog",
-                 list(mean=mean,
-                      sd=sd)
-                  )
-
-cholLogSumExp2
+  summarize_at("Height",
+               list(mean=mean,
+                    sd=sd)
+              )
+  HeightSumExp2
 ```
 
-Op basis van het tweede experiment schatten we dat de log cholestorol concentratie gemiddeld `r cholLogSumExp2$mean[1]-cholLogSumExp2$mean[2]` eenheden op log schaal `r ifelse(cholLogSumExp2$mean[1]>cholLogSumExp2$mean[2],"hoger","lager")` bij vrouwen dan bij mannen.
 
-Indien we een statistische test uitvoeren (zie hoofdstuk 5: Statistische besluitvorming) kunnen we op basis van de kleine steekproef besluiten dat het gemiddeld cholestorol niveau op log schaal `r ifelse(t.test(cholLog~Gender,samp2,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")` verschillend is tussen mannen en vrouwen.
+In de nieuwe steekproef zijn vrouwen zijn gemiddeld `r round(abs(HeightSumExp2$mean[1]-HeightSumExp2$mean[2]),2)` cm `r ifelse(HeightSumExp2$mean[1]>HeightSumExp2$mean[2],"groter","kleiner")` dan mannen. En dit verschil is statistisch `r ifelse(t.test(Height~Gender,samp2,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")`
 
 
 ---
 
-## And again
+## Herhaal het experiment opnieuw
 
 ```{r}
-set.seed(12857)
-fem <- nhanesSub%>%filter(Gender=="female")%>%sample_n(size=10)
-mal <- nhanesSub%>%filter(Gender=="male")%>%sample_n(size=10)
+seed <- 1336602
+set.seed(seed)
+fem <- nhanesSub%>%filter(Gender=="female")%>%sample_n(size=5)
+mal <- nhanesSub%>%filter(Gender=="male")%>%sample_n(size=5)
 
 samp3<-rbind(fem,mal)
 
 samp3%>%
-  ggplot(aes(x=Gender,y=cholLog)) +
+  ggplot(aes(x=Gender,y=Height)) +
   geom_boxplot(outlier.shape=NA) +
-  geom_point(position="jitter")
+  geom_point(position="jitter") +
+  ylab("Lengte (cm)")
 
-cholLogSumExp3 <- samp3 %>%
+HeightSumExp3 <- samp3 %>%
   group_by(Gender) %>%
-  summarize_at("cholLog",
+  summarize_at("Height",
                    list(mean=mean,
                         sd=sd)
                     )
-
-cholLogSumExp3
+HeightSumExp3
 ```
 
-Op basis van het derde experiment schatten we dat de log cholestorol concentratie gemiddeld `r cholLogSumExp3$mean[1]-cholLogSumExp3$mean[2]` eenheden op log schaal `r ifelse(cholLogSumExp3$mean[1]>cholLogSumExp3$mean[2],"hoger","lager")` bij vrouwen dan bij mannen !?
-
-Indien we een statistische test uitvoeren (zie hoofdstuk 5: Statistische besluitvorming) kunnen we op basis van de kleine steekproef besluiten dat het gemiddeld cholestorol niveau op log schaal `r ifelse(t.test(cholLog~Gender,samp3,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")` verschillend is tussen mannen en vrouwen.
-
+In de nieuwe steekproef zijn vrouwen gemiddeld `r round(abs(HeightSumExp3$mean[1]-HeightSumExp3$mean[2]),2)` cm `r ifelse(HeightSumExp3$mean[1]>HeightSumExp3$mean[2],"groter","kleiner")` dan mannen. En dit verschil is statistisch `r ifelse(t.test(Height~Gender,samp3,var.equal=TRUE)$p.value < 0.05,"significant","niet significant")`
 ---
 
-## Summary
+## Samenvatting
 
-- Omdat we at random andere proefpersonen in elke steekproef selecteren uit de populatie bekomen we andere cholestorol concentraties.
+- We trokken at random andere proefpersonen in elke steekproef
 
-- Hierdoor zullen niet enkel de cholestorol niveaus van steekproef tot steekproef van elkaar verschillen maar ook de gemiddeldend, de standaard deviates en de standaard errors.
+- Hierdoor verschillen lengtemetingen van steekproef tot steekproef.
 
-- Merk op dat in de laatste steekproef de cholestorol concentratie op log schaal gemiddeld lager was voor vrouwne dan voor mannen, terwijl dat omgekeerd is in de populatie. Bovendien was dit verschil statistisch significant waardoor we op basis van deze steekproef foutief zouden concluderen dat het gemiddeld cholestorol niveau voor vrouwen statistisch significant lager is dan voor mannen.
+- Dus ook de geschatte gemiddeldes en standaard deviaties.
 
-- Dat impliceert dat ook onze conclusies onzeker zijn en van steekproef tot steekproef kunnen wijzigen.
+- Bijgevolg zijn onze conclusies ook onzeker en kunnen deze wijzigen van steekproef tot steekproef.
 
-- Steekproeven waarbij het effect omkeert en waarbij we besluiten dat het verschil significant is zijn heel zeldzaam. Omdat we met statistiek net de kans op het trekken foute conclusies gaan proberen te controleren.
+- Steekproeven waarbij het effect tegengesteld is aan dat in de populatie en waarbij we besluiten dat het verschil significant is, zijn zeldzaam.
 
-- Dit wordt in de onderstaande code geïllustreerd. We trekken 20000 herhaalde steekproeven van 10 vrouwen en 10 mannen uit de NHANES studie.
+$\rightarrow$ Met statistiek controleren we de kans op het trekken foute conclusies.
+
+- Dit wordt in de onderstaande code geïllustreerd. We trekken 10000 herhaalde steekproeven van 5 vrouwen en 5 mannen uit de NHANES studie.
 
 ```{r}
 # Aantal simulaties en steekproefgrootte per groep
-nSim <- 20000
-nSamp <- 10
+nSim <- 10000
+nSamp <- 5
 
 # We filteren de data vooraf zodat we dit niet telkens opnieuw hoeven te doen
-fem<-nhanesSub%>%filter(Gender=="female")
-mal<-nhanesSub%>%filter(Gender=="male")
+fem<-nhanesSub %>%
+  filter(Gender=="female")
+
+mal <- nhanesSub %>%
+  filter(Gender=="male")
 
 # Simulatie studie
 # Om snelle functies te kunnen gebruiken nemen we eerst nSim steekproeven en berekenen we daarna alles.
@@ -564,85 +583,44 @@ mal<-nhanesSub%>%filter(Gender=="male")
 femSamps <- malSamps <-matrix(NA,nrow=nSamp,ncol=nSim)
 for (i in 1:nSim)
 {
-  femSamps[,i] <- sample(fem$cholLog,nSamp)
-  malSamps[,i] <- sample(mal$cholLog,nSamp)
+  femSamps[,i] <- sample(fem$Height,nSamp)
+  malSamps[,i] <- sample(mal$Height,nSamp)
 }
 
 res <- data.frame(
-  verschil=colMeans(femSamps) - rowMeans(malSamps),
+  verschil=colMeans(femSamps) - colMeans(malSamps),
   Rfast::ttests(femSamps,malSamps)
   )
 
-sum(res$pvalue<0.05&res$verschil>0)
-sum(res$pvalue>=0.05)
 sum(res$pvalue<0.05&res$verschil<0)
-
+sum(res$pvalue>=0.05)
+sum(res$pvalue<0.05&res$verschil>0)
 
 res %>%
   ggplot(aes(x=verschil,y=-log10(pvalue),color=pvalue<0.05)) +
   geom_point() +
-  xlab("Gemiddeld Verschil (log2)") +
+  xlab("Gemiddeld Verschil (cm)") +
   ylab("Statistische Significantie")
 
 res %>%
   ggplot(aes(y=verschil)) +
   geom_boxplot() +
-  geom_point(aes(x=0,y=c(mean(fem$cholLog)-mean(mal$cholLog)),color="Pop. Verschil"),size=3,pch=17) +
-  ylab("Gemiddeld Verschil (log2)")
+  ylab("Gemiddeld Verschil (cm)")
   xlab("")
 ```
 
-Enkel in `r sum(res$pvalue<0.05&res$verschil<0)` van de 20000 steekproeven zouden we concluderen we dat het gemiddeld cholesterol concentratie van mannen significant hoger is dan van vrouwen.   
-Voor de overige steekproeven  is de cholesterol concentratrie voor mannen gemiddeld significant lager dan voor vrouwen (`r sum(res$pvalue<0.05&res$verschil>0)` steekproeven) of is het gemiddeld verschil statistisch niet significant (`r sum(res$pvalue>=0.05)` steekproeven).
-Het feit dat we in veel steekproeven resultaten vinden die statistisch niet significant zijn komt omdat de statistische toets een te lage kracht heeft om het verschil te detecteren wanneer er maar 10 observaties zijn per groep.
+
+Op basis van 10 000 steekproeven van 5 mannen en 5 vrouwen zagen we dat in `r sum(res$pvalue<0.05&res$verschil<0)` steekproeven vrouwen gemiddeld significant kleiner zijn dan mannen. In `r sum(res$pvalue>=0.05)` steekproeven besluiten we dat vrouwen en mannen gemiddeld niet significant verschillen in lengte. En in `r sum(res$pvalue<0.05&res$verschil>0)` besluiten we dat vrouwen gemiddeld significant groter zijn dan mannen.
+
+- De steekproef die we toonden waaruit we zouden besluiten dat vrouwen significant groter zijn dan mannen is heel onwaarschijnlijk. Er moesten `r paste(seed)` steekproeven worden getrokken om deze extreme steekproef te vinden.
+
+Het feit dat we in veel steekproeven resultaten vinden die statistisch niet significant zijn komt omdat de statistische toets een te lage kracht heeft om het verschil te detecteren wanneer er maar 5 observaties zijn per groep.
 
 ---
 
 ## Grotere steekproef?
 
 Wat gebeurt er als we de steekproef verhogen naar 50 observaties per groep?
-
-```{r}
-nSim <- 20000
-nSamp <- 50
-
-# We filteren de data vooraf zodat we dit niet telkens opnieuw hoeven te doen
-fem<-nhanesSub%>%filter(Gender=="female")
-mal<-nhanesSub%>%filter(Gender=="male")
-
-# Simulatie studie
-# Om snelle functies te kunnen gebruiken nemen we eerst nSim steekproeven en berekenen we daarna alles.
-
-femSamps <- malSamps <-matrix(NA,nrow=nSamp,ncol=nSim)
-for (i in 1:nSim)
-{
-  femSamps[,i] <- sample(fem$cholLog,nSamp)
-  malSamps[,i] <- sample(mal$cholLog,nSamp)
-}
-
-res <- data.frame(
-  verschil=colMeans(femSamps) - rowMeans(malSamps),
-  Rfast::ttests(femSamps,malSamps)
-  )
-
-sum(res$pvalue<0.05&res$verschil>0)
-sum(res$pvalue>=0.05)
-sum(res$pvalue<0.05&res$verschil<0)
-
-
-res %>%
-  ggplot(aes(x=verschil,y=-log10(pvalue),color=pvalue<0.05)) +
-  geom_point() +
-  xlab("Gemiddeld Verschil (log2)") +
-  ylab("Statistische Significantie")
-
-res %>%
-  ggplot(aes(y=verschil)) +
-  geom_boxplot() +
-  geom_point(aes(x=0,y=c(mean(fem$cholLog)-mean(mal$cholLog)),color="Pop. Verschil"),size=3,pch=17) +
-  ylab("Gemiddeld Verschil (log2)")
-  xlab("")
-```
 
 ---
 
@@ -666,8 +644,14 @@ for Infantile Paralysis (NFIP) een grote studie opgezet om de effectiviteit van 
 
 ### Data
 ```{r}
-nfip<-data.frame(group=c("cases","controls","noConcent"),grade=c("g2","g1g3","g2"),vaccin=c("yes","no","no"),total=c(221998,725173,123605),polio=c(54,391,56))
-nfip$noPolio<-nfip$total-nfip$polio
+nfip <- tibble(
+  group=c("cases","controls","noConcent"),
+  grade=c("g2","g1g3","g2"),
+  vaccin=c("yes","no","no"),
+  total=c(221998,725173,123605),
+  polio=c(54,391,56)
+  ) %>%
+  mutate(noPolio = total - polio)
 knitr::kable(nfip)
 ```
 
@@ -676,7 +660,8 @@ Vergelijk de polio incidentie?
 ---
 
 ```{r}
-nfip$incidencePM<-round(nfip$polio/nfip$total*1e6,0)
+nfip <- nfip %>%
+  mutate(incidencePM = round(nfip$polio/nfip$total*1e6,0))
 knitr::kable(nfip)
 ```
 
@@ -715,8 +700,8 @@ Een nieuwe studie werd uitgevoerd: dubbel blinde gerandomiseerde studie.
 
   - Kinderen worden at random toegewezen aan controle of case arm van het experiment nadat de ouders toestemden met vaccinatie.
   - Controle: vaccinatie met placebo
-  - Treatment: vaccinatie met vaccine
-  - double blinding:
+  - Treatment: vaccinatie met vaccin
+  - Double blinding:
     - ouders en kinderen weten niet of ze werden gevaccineerd of niet
     - medische staf en onderzoekers weten niet of het kind het vaccin of de placebo kreeg
 
@@ -725,14 +710,19 @@ Een nieuwe studie werd uitgevoerd: dubbel blinde gerandomiseerde studie.
 ### Data
 
 ```{r}
-salk<-data.frame(group=c("cases","control","noConcent"),treatment=c("vaccine","placebo","none"),total=c(200745,
-201229, 338778),polio=c(57,142,157))
-salk$noPolio<-salk$total-salk$polio
-salk$incidencePM<-round(salk$polio/salk$total*1e6,0)
+salk <- data.frame(
+  group=c("cases","control","noConcent"),
+  treatment=c("vaccine","placebo","none"),
+  total=c(200745,201229, 338778),polio=c(57,142,157)
+  ) %>%
+  mutate(
+    noPolio = total-polio,
+    incidencePM = round(polio/total*1e6,0)
+    )
 knitr::kable(salk)
 ```
 
-- We observeren en veel groter effect nu dat cases en controles vergelijkbaar zijn, incidentie van respectievelijk `r salk$incidencePM[1]`  and `r salk$incidencePM[2]` per miljoen.
+- We observeren een veel groter effect nu dat cases en controles vergelijkbaar zijn, incidentie van respectievelijk `r salk$incidencePM[1]`  and `r salk$incidencePM[2]` per miljoen.
 
 - De polio incidentie voor kinderen die geen toestemming geven blijft vergelijkbaar  `r nfip$incidencePM[3]` and `r salk$incidencePM[3]` per miljoen respectievelijk in the NFIP and Salk study.
 
@@ -781,10 +771,16 @@ text(0.5,-0.3,"Statistical\nInference",cex=2,col="darkred")
 
 $\rightarrow$ Goede proefopzet is cruciaal!
 
-- We hebben ook geobserveerd dat er variabiliteit is in de populatie en dat zorgt voor onzekerheid in de resultaten en de conclusies van een analyse omdat we slechts een kleine steekproef kunnen nemen uit de populatie.
+---
+
+- We hebben ook geobserveerd dat er variabiliteit is in de populatie
+- We kunnen maar een steekproef nemen uit de populatie
+
+$\rightarrow$ onzekerheid in de resultaten
+$\rightarrow$ onzekerheid in de conclusies
 
 
-
+---
 
 - Statistiek is de wetenschap voor het
     1. verzamelen (experimenteel design),
@@ -823,7 +819,7 @@ for (i in 1:50)
 	radius=sample(grid,prob=grid^2*pi/sum(grid^2*pi),size=1)
 	kopvoeter(3+radius*cos(angle1/180*pi),8+radius*sin(angle1/180*pi),angle=angle2)
 }
-text(7.5,8,"cholesterol in population",col="red",cex=1.2)
+text(7.5,8,"Height in population",col="red",cex=1.2)
 
 rect(0,0,10,4,border="blue",lwd=2)
 text(.5,2,"sample",srt=90,col="blue",cex=2)
@@ -834,7 +830,7 @@ for (i in 0:2)
 
 	kopvoeter(2.1+j*(3.9-2.1)/4,1.1+i)
 }
-text(7.5,2,"cholesterol in sample",col="blue",cex=1.2)
+text(7.5,2,"Height in sample",col="blue",cex=1.2)
 
 arrows(3,5.9,3,4.1,col="black",lwd=3)
 arrows(7,4.1,7,5.9,col="black",lwd=3)
