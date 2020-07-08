@@ -35,7 +35,7 @@ schemadotorg:
 ---
 
 - [intro](theory/01-intro.html), [slides](theory/01-intro_slides.html)
-- [concepts](theory/01-concepts.html)
+- [concepts](theory/02-concepts.html)
 
 ---
 
