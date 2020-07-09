@@ -4,6 +4,25 @@ author: Lieven Clement
 output: ioslides_presentation
 ---
 
+---
+
+![](https://pbs.twimg.com/media/CDsSzcUVAAAVXsk?format=png&name=900x900)
+
+"the expression for many sets of genes was found to be more similar in different tissues within the same species than between species."
+
+"Overall, our results indicate that there is considerable RNA expression diversity between humans and mice, well beyond what was described previously, likely reflecting the fundamental physiological differences between these two organisms."
+
+---
+
+![](https://pbs.twimg.com/media/CDsSzcUVAAAVXsk?format=png&name=900x900)
+https://twitter.com/Y_Gilad/status/593088451462963202
+
+---
+
+![](https://pbs.twimg.com/media/CDsSzcFUMAAVwGa?format=png&name=small)
+https://twitter.com/Y_Gilad/status/593088451462963202
+
+---
 
 ## Oksel microbiome voorbeeld
 
