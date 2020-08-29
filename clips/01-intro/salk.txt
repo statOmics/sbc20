@@ -1,0 +1,55 @@
+Salk Study
+
+- In 1916, brak de eerste grote polio epidemie uit in de USA.
+- Begin de jaren 50 ontwikkelde John Salk een vaccin met belovende resultaten in het lab.
+- In 1954, heeft de National Foundation for Infantile Paralysis (NFIP) een grote studie opgezet om de effectiviteit van het Salk vaccin na te gaan.
+- Veronderstel dat de NFIP in 1954 een groot aantal kinderen zou hebben gevaccineerd, wat zouden ze dan kunnen besluiten als de polio incidentie in 1954 lager was dan in 1953?
+- Neen, het zou gekund hebben dat het verschil in polio incidentie veroorzaakt werd door het feit dat de infectie minder hevig was in 1954.
+- We hebben dus een controle nodig!
+
+NFIP Study
+- Grote simultane studie met gevaccineerde kinderen (cases) en ongevaccineerde kinderen (controles).
+- In scholen van districten met hoge polio incidentie.
+- Cases: kinderen van de tweede graad van het lager onderwijs waarvan de ouders toestemden met vaccinatie.
+- Controles: kinderen van de eerste en derde graad.
+
+Data
+
+- We zien 54 polio besmettingen bij de ingevaccineerde kinderen
+- en 391 bij de controle groep.
+- De twee groepen verschillen echter ook in grootte!
+
+
+We zullen daarom kijken naar polio incidentie per miljoen kinderen.
+- We observeren nu dat de incidentie meer dan dubbel zo hoog is in de controle groep als in de vaccinatie groep.
+- We observeren echter ook dat de incidentie lager is in de groep van kinderen uit de tweede graad waarvan de ouders geen toestemming gaven voor inenting!?
+- Wat betekent dit?
+- Zijn de gevaccineerde en controle groep vergelijkbaar?
+
+
+Neen!
+
+- We observeren een lagere polio (P) incidentie voor kinderen bij wie de ouders geen toestemming gaven dan in de controle groep.
+- Toestemming voor vaccinatie (V) is geassocieerd met de socio-economische status (S).
+- Kinderen van lagere socio-economische status zijn meer resistent tegen de ziekte.
+- Er is dus confounding: de socio-economische status is geassocieerd met zowel de polio incidentie als met de toestemming op vaccinatie.
+- Controle groep en gevaccineerde groep zijn dus niet vergelijkbaar:
+- Ze verschillen bovendien ook in leeftijd!
+
+
+Salk Studie
+
+Een nieuwe studie werd uitgevoerd: dubbel blinde gerandomiseerde studie.
+
+Kinderen worden at random toegewezen aan controle of case arm van het experiment nadat de ouders toestemden met vaccinatie.
+Controle: vaccinatie met placebo
+Treatment: vaccinatie met vaccine
+Double blinding:
+ouders en kinderen weten niet of ze werden gevaccineerd of niet
+medische staf en onderzoekers weten niet of het kind het vaccin of de placebo kreeg
+
+Resultaten
+
+- We observeren een veel groter effect nu dat cases en controles vergelijkbaar zijn, incidentie van respectievelijk 284 and 706 per miljoen.
+- De polio incidentie voor kinderen die geen toestemming geven blijft vergelijkbaar 453 and 463 per miljoen respectievelijk in the NFIP and Salk study
+- We zullen later in de cursus tonen dat het effect van het vaccin statistisch significant is.

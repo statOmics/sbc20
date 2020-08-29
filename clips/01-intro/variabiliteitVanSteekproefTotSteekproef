@@ -1,0 +1,101 @@
+Variabiliteit van steekproef tot steekproef
+
+- Randomisatie sterk gerelateerd met het concept van de populatie en scope van de studie.
+
+- De scope van de studie moet goed worden omschreven voor de start van het experiment.
+
+- Om resultaten van de steekproef te kunnen veralgemenen naar de populatie toe trekken we subjecten at random uit de populatie
+
+- Volledig random trekken van de populatie :
+
+    - alle subjecten van de populatie hebben evenveel kans om in de steekproef te worden opgenomen.
+
+    - selectie van een subject is onafhankelijk van andere subjecten in de steekproef.
+
+- De steekproef is dan representatief voor de populatie, maar is nog steeds random.
+
+Welke implicaties heeft dit?
+
+- Om dit te illustreren zullen we gebruik maken van een hele grote studie.
+
+- Uit die studie zullen we herhaaldelijk kleine steekproeven trekken om te begrijpen hoe de gegevens en statistieken veranderen van steekproef tot steekproef.
+
+
+De National Health and Nutrition Examination Studie
+
+Elk jaar wordt een representatieve steekproef van 10000 Amerikanen onderzocht op een heel aantal karakteristieken:
+
+- Leeftijd
+- Lengte
+- Geslacht
+- Bloeddruk
+- ...
+
+We focussen in dit voorbeeld op het verschil in lengte tussen volwassen mannen en vrouwen in de Amerikaanse populatie.
+We exploreren eerst de lengte data in de NHANES studie.
+Als we heel veel data hebben krijgen we een goed zicht op de verdeling van de gegevens a.d.h.v. een histogram.
+
+- We zien dat de verdeling van de lengte van mannen hoger ligt dan deze van vrouwen.
+- We zien dat de data min of meer symmetrisch verdeeld zijn in elke groep en een klokvorm hebben.
+- We zullen later zien dat de lengte data approximatief normaal verdeeld zijn.
+- Dat zal ons toe laten om de data verder samen te vatten door gebruik te maken van twee statistieken: het gemiddelde en de standaard deviatie wat een maat is voor de spreiding van de gegevens rond het gemiddelde.
+
+Vrouwen zijn gemiddeld 161.9 cm en manne 175.8 cm.
+Wat onze intuïtie bevestigd dat mannen gemiddeld groter zijn dan vrouwen.
+
+Experiment
+
+- Stel dat we geen toegang hebben tot de metingen van de NHANES studie.
+
+- We zouden dan een experiment op moeten zetten om metingen bij mannen en vrouwen te doen.
+
+- Veronderstel dat we budget hebben om metingen bij 5 mannen en 5 vrouwen te doen. Voor lengte metingen zou dat nu geen probleem vormen maar voor meer kostelijke metingen zoals proteine expressie data worden vaak zelfs minder dan 5 subjecten per groep gebruikt.
+
+- We zouden dan 5 mannen en 5 vrouwen boven de 25 jaar at random moeten trekken uit de Amerikaanse populatie.
+
+- We kunnen dit experiment simuleren door 5 vrouwen en 5 mannen at random te selecteren uit de NHANES studie.
+
+We trekken een eerste steekproef
+
+- We hebben 5 mannen en 5 vrouwen in de steekproef
+- We exploreren vervolgens de data in de steekproef.
+
+- Vrouwen zijn gemiddeld 18 cm kleiner dan mannen en het verschil is statistisch significant.
+
+
+We trekken nu een nieuwe steekproef
+- 5 andere mannen en vrouwen werden getrokken uit de populatie
+- De bekomen lengtes zijn dus anders
+- Op basis van deze steekproef besluiten we dat er gemiddeld geen significant verschil is in lengte tussen mannen en vrouwen.
+
+We trekken een nieuwe steekproef
+- Door toeval hebben we heel grote vrouwen en eerder kleine mannen opgenomen in de steekproef.
+- Op basis van deze steekproef zouden we besluiten dat vrouwen gemiddeld significant groter zijn dan mannen!
+
+Conclusies:
+
+1. In elke steekproef worden at random andere proefpersonen uit de populatie getrokken.
+2. Hierdoor verschillen lengte metingen van steekproef tot steekproef.
+3. Dus ook het geschatte gemiddeldes en standaard deviaties.
+4. Ook onze conclusies zijn onzeker en kunnen wijzigen van steekproef tot steekproef.
+5. Steekproeven waarbij het effect tegengesteld is aan dat in de populatie en waarbij we besluiten dat het verschil significant is, zijn zeldzaam.
+6. Met statistiek controleren we de kans op het trekken foute conclusies.
+
+We illustreren dit nu in dmv 10.000 herhaalde steekproeven
+1. In 7057 steekproeven zijn vrouwen gemiddeld significant kleiner dan mannen
+2. In 2943 steekproeven is er gemiddeld geen significant verschil in lengte tussen vrouwen en vrouwen
+3. In geen enkele steekproef waren vrouwen gemiddeld significant groter dan mannen
+
+De steekproef waarin dit wel het geval was is heel uitzonderlijk:
+ik had 1 336 602 steekproeven moeten trekken om deze extreme steekproef te vinden waaruit we foutief zouden concluderen dat vrouwen gemiddeld significant groter zijn dan mannen.
+
+Dit wordt ook weergegeven in deze grafiek waarin we de statistische significantie (- 10 log p) plotten in functie van het gemiddeld verschil in lengte tussen vrouwen en mannen.
+In de overgroote meerderheid van de steekproeven is het gemiddelde verschil negatief wat erop wijst dat het steekproefgemiddelde voor vrouwen in de steekproef kleiner is dan voor mannen.
+Enkel in 17 steekproeven is dat niet het geval.
+Voor deze steekproeven in het gemiddeld verschil niet significant.
+
+Wat gebeurt er als we de steekproefgrootte van 5 naar 50 personen per groep opdrijven?
+
+- We geven eerst de resultaten weer van de vorige simulaties van 5 vs 5 personen.
+- Als we nu de plot maken voor 50 personen per groep zien we dat het gemiddeld verschil voor alle steekproeven negatief is en dat het gemiddeld verschil veel nauwkeuriger wordt geschat (minder varieert).
+- Voor alle steekproeven is het gemiddeld verschil in lengte tussen mannen en vrouwen extreem significant. (p-waarde is steeds kleiner dan 1 of 100 000).

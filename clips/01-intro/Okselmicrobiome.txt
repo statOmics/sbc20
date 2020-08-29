@@ -1,0 +1,115 @@
+Het eerste voorbeeld betreft een studie over het oksel microbiome.
+Zweten en vooral een zweetgeur is vervelend.
+Het zweten op zich is niet de oorzaak van de geur.
+Het zijn de microorganismen onder de oksel die het zweet metaboliseren die de geur veroorzaken.
+De gemeenschap van microorganismen onder de oksel wordt ook het oksel microbiome genoemd.
+
+Corynebacterium is een microorganisme dat zweet metaboliseert en hierbij verzadigde vetzuren aanmaakt met een penetrante geur.
+Gelukkig zijn er ook de Staphylococcus bacteriën die het zweet ook metaboliseren maar hierbij geen hinderlijke verzadigde vetzuren produceren.
+Het CMet Lab aan de Universiteit Gent doet onderzoek naar microbiële gemeenschappen en stelde een therapie voor om mensen van dit probleem af te helpen.
+Die bestaat uit een antibiotica behandeling van de oksel om microbiome af te doden
+Gevolgd door een transplantatie van het microbiome van een persoon zonder zweetgeur.
+
+Alvorens de therapie breed kan worden ingezet is, dient de effectiviteit eerst te worden getest in een experiment.
+Een eerste tak van de statistiek focust op proefopzet.
+Idealiter zouden we de therapie evalueren door het uit te testen op de volledige populatie van personen met een zweetgeur.
+Dat is echter niet haalbaar:
+
+1. Ethisch niet verantwoord: we weten niet of therapie werkt
+2. Financieel en logistiek onmogelijk
+3. De populatie waarover we uitspraken wensen te doen bestaat nog niet volledig: ze omvat ook toekomstige personen met een zweetgeur.
+Merk op dat de populatie in de statistiek een theoretisch begrip is dat afwijkt van de term populatie die in de biologie wordt gebruikt.
+
+Daarom zullen we een steekproef nemen.
+Hierbij zullen we een aantal personen uit de populatie selecteren waarop we het experiment uit zullen voeren.
+Cruciaal is dat de steekproef representatief is voor de populatie zodat we de resultaten van het experiment zullen kunnen veralgemenen naar de populatie.
+We zullen de mensen daarom volledig at random trekken uit de populatie zodat elk subject een zelfde kans heeft om in het experiment te worden opgenomen: randomisatie.
+Merk ook op dat het heel belangrijk om de populatie goed te omschrijven voor de start van het experiment: scope van de studie.
+
+In deze studie worden twintig personen met een zweetgeur volledig at random geselecteerd uit de populatie.
+We zouden nu elk subject kunnen behandelen.
+Maar, dan zijn we niet zeker dat een verschil in het microbiome te wijten is aan de behandeling.
+We hebben dus een goeie controle nodig.
+We zouden de controle personen niet kunnen behandelen, maar dan kan een verschil in microbiome mogelijks ook te wijten zijn aan de antibiotica behandeling ipv aan de transplantatie.
+We zullen daarom 10 personen een placebo behandeling geven, enkel antibiotica en 10 personen met antibiotica en de transplantatie.
+We zullen de proef personen ook opnieuw volledig at random toewijzen aan de behandelingsgroep zodat beide groepen vergelijkbaar zijn.
+
+Hoe het microbiome meten?
+In de studie maakte men gebruik van een DGGE meting.
+Microorganismen hebben een heel variabel stukje ribosomaal RNA, het 16s ribosomaal RNA dat uniek is voor de soort.
+Het 16S rRNA van de verschillende microorganismen in het staal wordt dan geamplificeerd en gescheiden op een DGGE gel.
+Waarbij een bandenpatroon ontstaat volgens de lengte van het 16s rRNA.
+Elke band is correspondeert microorganisme.
+Hoe helderder de band hoe meer van de bacterie in het microbiome.
+Band A staat voor Staphylococcus.
+De ratio van de intensiteit van de band en de totale intensiteit in het bandenpatroon is een proxy voor de relatieve abundantie.
+
+Hoe quantificeren we nu het effect van de behandeling?
+A.d.h.v. het gemiddeld verschil in relatieve abundantie in Staphylococcus tussen de transplantatie en placebo groep.
+
+Het experiment kan nu worden uitgevoerd.
+Eerst gaan we het effect van de behandeling bestuderen in de steekproef.
+Hiervoor maken we gebruik van het statistische softwarepakket R en lezen we de data in.
+Als we naar de data matrix kijken zien we de volgende structuur:
+proefpersonen in de rijen waarvoor we twee karateristieken (variabelen) hebben bijgehouden per subject:
+behandeling (trt) en relatieve abundantie (rel). Deze data structuur wordt tidy data genoemd.
+Als we staren naar de data matrix is het heel moeilijk om daar structuur in te zien:
+We maken daarom gebruik van een tweede belangrijke tak van de statistiek: Data exploratie en beschrijvende statistiek.
+
+Het effect van de behandeling in de steekproef kan worden gekwantificeerd door de gemiddelde relatieve abundantie te vergelijken in elke steekproef.
+We observeren dat de gemiddelde relatieve abundantie in de steekproef gemiddelde 22 % hoger is in de transplantatie dan in de placebo groep.
+We quantificeren ook de variabiliteit, spreiding van de gegevens rond het gemiddelde a.d.h.v. de .
+Dit wordt ook vaak grafisch weergegeven d.m.v. een barplot.
+Deze plot is echter niet informatief:
+- We zien enkel een twee punt summary: gemiddelde en sd.
+- Is dat wel een goeie samenvattende maat?
+- Stuk van de plot is niet informatief: waarschijnlijk geen relatieve abundanties van 0 %?
+- We moeten de data zo ruw mogelijk weergegeven.
+
+De boxplot is informatief:
+- Het geeft een 5 point summary: minimum, 1 ste kwartiel, mediaan, 2de kwartiel, maximum
+- Omdat we maar 10 meetpunten hebben per groep kunnen we ook de ruwe data weergeven.
+- We observeren dat de relatieve abundanties bij bijna alle proefpersonen in de transplantatie groep hoger is dan deze voor de placebo groep.
+- Aanwijzing voor
+
+Hoe kunnen we de conclusies uit de steekproef nu veralgemenen naar de populatie toe? (proces van inductie)
+
+- Op basis van de steekproef kunnen we het effect (gemiddeld verschil in relatieve abundantie) schatten in de populatie.
+
+- De prijs die we hiervoor betalen is onzekerheid!
+
+- We kunnen op basis van een steekproef nooit absoluut zeker zijn van onze conclusies.
+
+Statistische besluitvorming
+
+- Met data kunnen we niet bewijzen dat een behandeling werkt.
+
+- Falsificatie principe van Popper: Data kunnen enkel een hypothese of een theorie ontkrachten.
+
+- Met statistiek kunnen we dus niet aantonen dat de behandeling werkt.
+
+- Statistiek zal ons wel toelaten om het omgekeerde te falsifiëren: als we veronderstellen dat er geen effect van de behandeling, spreekt de data in de steekproef dit tegen?
+
+- Met statistiek kunnen we berekenen hoe waarschijnlijk het is om een gemiddeld verschil in relatieve abundantie te zien tussen placebo en transplantatiegroep dat minstens 22% bedraagt als de behandeling geen effect zou hebben.
+
+- Die kans wordt een p-waarde genoemd.
+
+- Als p heel klein is, dan is het heel onwaarschijnlijk om een dergelijk effect te observeren in een steekproef door toeval.
+
+- p wordt meestal vergeleken met 5%. Als er geen effect is van de behandeling dan tolereren 5% vals positieve conclusies.
+
+- Om de kans p te berekenen is het nodig om de data te modelleren met statistische modellen.
+
+
+Statistische toets
+
+In latere hoofdstukken zullen we zien dat we t-test kunnen gebruiken om hetgeen we observeren in de microbiome dataset te veralgemenen naar de populatie.
+
+De p-waarde is kleiner dan 5%.
+Als er in werkelijkheid geen effect is van de behandeling en als de model aannames correct zijn dan verwachten we in minder dan 2 op 10000 random steekproeven een effect dat minstens 22% relatieve abundantie bedraagt door toeval.
+Deze kans is heel klein dus besluiten we dat het heel onwaarschijnlijk is om dergelijk effect in een steekproef te observeren door toeval.
+We concluderen dus dat het effect van de behandeling statistisch significant is.
+
+Conclusie:
+Er is een statistisch significant verschil in gemiddelde relatieve abundantie van Staphylococcus in het okselmicrobiome van personen met een zweetgeur die worden behandeld met de transplantie en deze die behandeld worden met de placebo behandeling. 
+Gemiddeld is de relatieve abundantie van Staphylococcus in het microbiome van personen met een zweetgeur `r 22`% hoger na de transplantie dan na de placebo behandeling.
