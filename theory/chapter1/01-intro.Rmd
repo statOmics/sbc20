@@ -48,6 +48,25 @@ Garcia-Berthou & Alcaraz (Med. Res. Meth. 2004):
 
 ---
 
+
+https://www.medrxiv.org/content/10.1101/2020.07.17.20155846v1
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/Fonseca2020CovidVegetables.png)
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables.png)
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables3.png)
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png)
+
+---
+
 ![](https://github.com/statOmics/sbc20/raw/master/theory/figures/pnasHumanMousePaperTitle.png){width=95%}
 
 "the expression for many sets of genes was found to be more similar in different tissues within the same species than between species."
