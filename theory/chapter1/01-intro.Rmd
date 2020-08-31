@@ -63,28 +63,46 @@ Though our results do not allow to infer causality, they do reinforce our a prio
 
 ![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables3.png)
 
-- Importance of Data Exploration!
-- Data toont niet echt een trend
-- Data toont eerder twee clusters: beneden en boven 200 doden/miljoen
-- Model op basis van komkommer consumptie modelleert de data niet correct: overschatting voor een heel aantal landen met lage consumptie zoals Portugal, Hongarije, Slovenië, ...
-
----
-
-
+- Vele hypotheses worden getest ?!
+- Causaliteit ?!
+- Belang van experimenteel design: Observationele studie
+- Op basis van de data zijn geen uitspraken mogelijk op het niveau van individuen
 
 ---
 
 ![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png)
 
-- Importance of Data Exploration!
+- Belang Data Exploratie!
 - Data toont niet echt een trend
 - Data toont eerder twee clusters: beneden en boven 200 doden/miljoen
 - Model op basis van komkommer consumptie modelleert de data niet correct: overschatting voor een heel aantal landen met lage consumptie zoals Portugal, Hongarije, Slovenië, ...
 
 ---
 
-Papers zijn al geciteerd!!!
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables5.png)
+- Papers zijn nog niet aanvaard in een journal maar worden toch al 4 keer geciteerd!!!
+
+---
+
+Drie grote domeinen in statistiek
+
+1. Statistische inferentie
+
+  - Data dredging, p-hacking, ...: in grote datasets waar je heel veel hypotheses test vind je vrijwel altijd vrij sterke patronen vinden door toeval $\rightarrow$ Je moet je analyse corrigeren als je meerdere hypotheses test.
+
+2. Studiedesign
+
+    - Confounding: Landen verschillen niet enkel in consumptie van één bepaalde groente maar ook in andere veranderlijken (demografie, registratie van covid doden, maatregels, gezondheidszork...) die gerelateerd zijn aan COVID-19 mortaliteit
+
+    - Daarom moeilijk om uit observationele studies causale (oorzaak-gevolg) verbanden te trekken
+
+    - In experimentele studie:  randomisatie om te zorgen dat groepen enkel verschillen in de behandeling.
+
+    - Experimentele studies zijn daarom de gouden standaard om te testen voor causale verbanden.
+
+3. Data exploratie en visualisatie
+
+    - Cruciaal om inzicht te verwerven in de data
+    - Model veronderstellingen nagaan!
 
 ---
 
@@ -95,8 +113,9 @@ Garcia-Berthou & Alcaraz (Med. Res. Meth. 2004):
 - 11%: fouten tegen interpretatie
 - 4%: besluit spreekt evidentie tegen
 
----
+$\rightarrow$ Statistische geletterdheid is cruciaal om resultaten en publicaties kritisch en correct te kunnen interpreteren.
 
+---
 
 # Case study: oksel microbiome
 

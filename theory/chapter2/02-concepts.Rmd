@@ -48,7 +48,7 @@ for (i in 1:50)
 	radius=sample(grid,prob=grid^2*pi/sum(grid^2*pi),size=1)
 	kopvoeter(3+radius*cos(angle1/180*pi),8+radius*sin(angle1/180*pi),angle=angle2)
 }
-text(7.5,8,"Cholesterol in population",col="red",cex=1.2)
+text(7.5,8,"Lengte in populatie",col="red",cex=1.2)
 
 rect(0,0,10,4,border="blue",lwd=2)
 text(.5,2,"sample",srt=90,col="blue",cex=2)
@@ -59,13 +59,13 @@ for (i in 0:2)
 
 	kopvoeter(2.1+j*(3.9-2.1)/4,1.1+i)
 }
-text(7.5,2,"Cholesterol in sample",col="blue",cex=1.2)
+text(7.5,2,"Lengte in steekproef",col="blue",cex=1.2)
 
 arrows(3,5.9,3,4.1,col="black",lwd=3)
 arrows(7,4.1,7,5.9,col="black",lwd=3)
 text(1.5,5,"EXP. DESIGN (1)",col="black",cex=1.2)
-text(8.5,5,"ESTIMATION &\nINFERENCE (3)",col="black",cex=1.2)
-text(7.5,.5,"DATA EXPLORATION &\nDESCRIPTIVE STATISTICS (2)",col="black",cex=1.2)
+text(8.5,5,"SCHATTING &\nINFERENTIE (3)",col="black",cex=1.2)
+text(7.5,.5,"DATA EXPLORATIE &\nBESCHRIJVENDE STATISTIEK (2)",col="black",cex=1.2)
 ```
 
 
@@ -214,7 +214,7 @@ karakteristiek uit de studiepopulatie.
     - Voor het werpen van een dobbelsteen is de deelruimte $\Omega=(1,2,3,4,5,6)$.
 
 
-- Een event $A$  is een subset vam de steekproefruimte
+- Een event $A$  is een subset van de steekproefruimte
 
       - Een even getal werpen met een dobbelsteen: $A=(2,4,6)$.
       - Kan ook een specifieke waarde zijn $A=(1)$.
@@ -718,9 +718,11 @@ pnorm(150,HeightSum10$mean[1],HeightSum10$sd[1])
 ecdfFem10(150)
 ```
 
-Voor de kleine steekproef is de geschatte kans op basis van de empirische distributie veel minder nauwkeurig.
-Kwantielen op basis van een kleine steekproef zijn immers vrij onzeker. Ze gebruiken immers maar een fractie van de data.   
-De schatting op basis van de normale verdeling laat toe om alle data te gebruiken voor het schatten van de model parameters.
+- Voor kleine steekproef is geschatte kans o.b.v. empirische distributie veel minder nauwkeurig.
+
+- Kwantielen geschat o.b.v. kleine steekproef zijn immers vrij onzeker. Ze gebruiken immers maar een fractie van de data.   
+
+- De schatting o.b.v. de normale verdeling laat toe om alle data te gebruiken voor het schatten van de model parameters.
 
 ---
 
@@ -758,13 +760,14 @@ fem10 %>%
   quantile(prob=c(0.025,0.975))
 ```
 
-- Dit interval is een ruwe benadering. We hebben immers niet voldoende observaties om een goede benadering te hebben voor extreme quantielen.
+- Dit interval o.b.v. de kleine steekproef is een ruwe benadering.
+- We hebben immers niet voldoende observaties om een goede benadering te hebben voor extreme quantielen.
 
 ### Normale benadering
 
 - We kunnen de functie qnorm gebruiken om quantielen te berekenen van de normale distributie.
 
-- We weten dat een 95% referentie interval ongeveer binnen de twee standaard deviaties rond het gemiddelde ligt.
+- We weten dat een 95% referentie interval ongeveer binnen twee standaard deviaties rond het gemiddelde ligt.
 
 
 - Grote steekproef
