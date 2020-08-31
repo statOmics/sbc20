@@ -555,7 +555,7 @@ text(8.5,5,"ESTIMATION &\nINFERENCE (3)",col="black",cex=1.2)
 
 - Statistiek zal ons wel toelaten om het omgekeerde te falsifiëren: als we veronderstellen dat er geen effect van de behandeling, spreekt de data in de steekproef dit tegen?
 
-- Met statistiek kunnen we berekenen hoe waarschijnlijk het is om een gemiddeld verschil in relatieve abundantie te zien tussen placebo en transplantatiegroep dat minstens zo groot is als in de steekproef als de behandeling geen effect zou hebben.
+- Met statistiek kunnen we berekenen hoe waarschijnlijk het is om in een random steekproef (wanneer we het experiment dus opnieuw uit zouden voeren) een gemiddeld verschil in relatieve abundantie te zien tussen placebo en transplantatiegroep dat minstens zo groot is als in onze steekproef als de behandeling geen effect zou hebben.
 
 - Die kans wordt een p-waarde genoemd.
 
