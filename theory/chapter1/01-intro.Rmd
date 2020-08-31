@@ -39,6 +39,55 @@ Statistische geletterdheid is cruciaal om resultaten en publicaties kritisch te 
 
 ---
 
+https://www.medrxiv.org/content/10.1101/2020.07.17.20155846v1
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/Fonseca2020CovidVegetables.png)
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables.png)
+
+"The authors state: The negative ecological association between COVID-19 mortality and the consumption of cabbage and cucumber supports the a priori hypothesis previously reported.
+In this hypothesis, we proposed that vegetables such as Brassica - with an antioxidant activity reducing insulin resistance - may also be associated with low COVID-19 mortality in countries.
+"
+
+"
+Though our results do not allow to infer causality, they do reinforce our a priory hypothesis that the ingestion of anti-oxidant foods acting on insulin intolerance may have reduced the severity of COVID-19.
+"
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables4.png)
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables3.png)
+
+- Importance of Data Exploration!
+- Data toont niet echt een trend
+- Data toont eerder twee clusters: beneden en boven 200 doden/miljoen
+- Model op basis van komkommer consumptie modelleert de data niet correct: overschatting voor een heel aantal landen met lage consumptie zoals Portugal, Hongarije, Slovenië, ...
+
+---
+
+
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png)
+
+- Importance of Data Exploration!
+- Data toont niet echt een trend
+- Data toont eerder twee clusters: beneden en boven 200 doden/miljoen
+- Model op basis van komkommer consumptie modelleert de data niet correct: overschatting voor een heel aantal landen met lage consumptie zoals Portugal, Hongarije, Slovenië, ...
+
+---
+
+Papers zijn al geciteerd!!!
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables5.png)
+
+---
+
 Garcia-Berthou & Alcaraz (Med. Res. Meth. 2004):
 
 - Jaargang 2001 van Nature en British Medical Journal
@@ -49,44 +98,7 @@ Garcia-Berthou & Alcaraz (Med. Res. Meth. 2004):
 ---
 
 
-https://www.medrxiv.org/content/10.1101/2020.07.17.20155846v1
-
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/Fonseca2020CovidVegetables.png)
-
----
-
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables.png)
-
----
-
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables3.png)
-
----
-
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png)
-
----
-
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/pnasHumanMousePaperTitle.png){width=95%}
-
-"the expression for many sets of genes was found to be more similar in different tissues within the same species than between species."
-
-"Overall, our results indicate that there is considerable RNA expression diversity between humans and mice, well beyond what was described previously, likely reflecting the fundamental physiological differences between these two organisms."
-
----
-
-![](https://pbs.twimg.com/media/CDsSzcUVAAAVXsk?format=png&name=900x900)
-https://twitter.com/Y_Gilad/status/593088451462963202
-
----
-
-![](https://pbs.twimg.com/media/CDsSzcFUMAAVwGa?format=png&name=small)
-https://twitter.com/Y_Gilad/status/593088451462963202
-
----
-
-
-# Oksel microbiome voorbeeld
+# Case study: oksel microbiome
 
 
 ![](https://images.vrt.be/width1280/2018/06/27/4e72098d-7a0d-11e8-abcc-02b7b76bf47f.jpg){width=70%}
@@ -600,7 +612,7 @@ Gemiddeld is de relatieve abundantie van Staphylococcus in het microbiome van pe
 
 ---
 
-# Variabiliteit van steekproef tot steekproef
+# Case study: Lengte van mannen en vrouwen \- Variabiliteit van steekproef tot steekproef
 
 - Om te begrijpen dat een steekproef random is zouden we hetzelfde experiment veel keer moeten kunnen herhalen (`repeated sampling`).
 
@@ -993,7 +1005,7 @@ res %>%
 
 ---
 
-# Salk Study
+#Case study: Salk vaccin
 
 - In 1916, brak de eerste grote polio epidemie uit in de USA.
 - Begin de jaren 50 ontwikkelde John Salk een vaccin met belovende resultaten in het lab.
