@@ -85,11 +85,11 @@ text(7.5,.5,"DATA EXPLORATIE &\nBESCHRIJVENDE STATISTIEK (2)",col="black",cex=1.
 
 ---
 
-# Randomizatie
+# Randomisatie
 
-- Randomizatie compleet at random (no systematic allocation).
+- Randomisatie compleet at random (no systematic allocation).
 
-## Simpele Randomizatie
+## Simpele Randomisatie
 
 - Kan leiden tot verschillen in aantal subjecten per  behandelingsarm
 
@@ -108,7 +108,7 @@ text(7.5,.5,"DATA EXPLORATIE &\nBESCHRIJVENDE STATISTIEK (2)",col="black",cex=1.
     - (1) AABB, (2) ABAB, (3) ABBA, (4) BABA, (5) BAAB, (6) BBAA
     - ...
 
-- Gebalanceerde Randomizatie verzekert $\pm$ gelijk aantal subjecten in elke behandelingsarm van het experiment (vb controle en behandelingsgroep).
+- Gebalanceerde Randomisatie verzekert $\pm$ gelijk aantal subjecten in elke behandelingsarm van het experiment (vb controle en behandelingsgroep).
 
 - Zorgt er niet voor dat we een gelijk aantal mannen en vrouwen hebben in elke groep, etc.  
 
@@ -122,7 +122,7 @@ text(7.5,.5,"DATA EXPLORATIE &\nBESCHRIJVENDE STATISTIEK (2)",col="black",cex=1.
 
 - De imbalans voor bijvoorbeeld gender kan worden vermeden door gestratificeerde randomisatie: gebalanceerde randomisatie per stratum
 
-![Stratified Randomizatie](https://github.com/statOmics/sbc20/raw/master/theory/figures/stratification.png){ width=50% }
+![Stratified Randomisatie](https://github.com/statOmics/sbc20/raw/master/theory/figures/stratification.png){ width=50% }
 
 ---
 
@@ -147,26 +147,26 @@ text(7.5,.5,"DATA EXPLORATIE &\nBESCHRIJVENDE STATISTIEK (2)",col="black",cex=1.
 
 ---
 
-## Randomized complete block designs
+## Randomised complete block designs
 
 - Experimentele designs waarbij experimentele subjecten eerst worden opgedeeld in blokken
 - Vervolgens wordt elk niveau van de interventie binnen elk blok toepast en via randomisatie toegewezen.
 - Dat kan b.v. d.m.v. gestratificeerde randomisatie: stratificatie volgens blokken
-- Vaak wanneer uitkomst sterk varieert tussen subjecten zodat interventie-effect moeilijk op te pikken is
+- Nuttig wanneer uitkomst sterk varieert tussen subjecten zodat interventie-effect moeilijk op te pikken is
 - Als gegevens veel minder variabel zijn per blok, laat randomiseren van de interventie per blok toe om  interventie-effect binnen blok te evalueren met veel minder ruis.
-- Ook vaak gebruikt bij technische variabiliteit.
+- Ook veel gebruikt bij technische variabiliteit.
     - Vb grotere experimenten: meerdere celculturen nodig, niet alles kan tegelijk in lab, meerdere sequeneringsruns om genexpressie te meten
     - Fluctuaties in de labo-condities , tussen celculturen of van sequeneringsrun tot sequeneringsrun zorgen voor extra technische ruis.
-    - Blokken (vb. tijdstippen, runs, celculturen) en behandelingen randomizeren binnen elk blok
-    - opnieuw kan interventie-effecten met veel minder ruis worden geschat.
+    - Blokken (vb. tijdstippen, runs, celculturen) en behandelingen Randomiseren binnen elk blok
+    - Opnieuw interventie-effecten schatten met veel minder ruis.
 
 ---
 
-# Steekproef grootte
+# Steekproefgrootte
 
-- De steekproefgrootte en het design zijn cruciaal
+- De steekproefgrootte is ook cruciaal
 
-- Hoe groter de steekproef hoe meer precies de resultaten! Zie introductie
+- Eenzelfde proefopzet waarbij een steekproef uit dezelfde populatie wordt getrokken maar met meer subjecten $\rightarrow$ Meer precieze resultaten (Zie introductie)
 
 
 ---

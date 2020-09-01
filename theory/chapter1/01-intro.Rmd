@@ -45,7 +45,7 @@ https://www.medrxiv.org/content/10.1101/2020.07.17.20155846v1
 
 ---
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables.png)
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables.png){width=70%}
 
 "The authors state: The negative ecological association between COVID-19 mortality and the consumption of cabbage and cucumber supports the a priori hypothesis previously reported.
 In this hypothesis, we proposed that vegetables such as Brassica - with an antioxidant activity reducing insulin resistance - may also be associated with low COVID-19 mortality in countries.
@@ -54,6 +54,10 @@ In this hypothesis, we proposed that vegetables such as Brassica - with an antio
 "
 Though our results do not allow to infer causality, they do reinforce our a priory hypothesis that the ingestion of anti-oxidant foods acting on insulin intolerance may have reduced the severity of COVID-19.
 "
+
+---
+
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png){width=50%}
 
 ---
 
@@ -70,7 +74,7 @@ Though our results do not allow to infer causality, they do reinforce our a prio
 
 ---
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png)
+![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png){width=70%}
 
 - Belang Data Exploratie!
 - Data toont niet echt een trend
@@ -79,15 +83,19 @@ Though our results do not allow to infer causality, they do reinforce our a prio
 
 ---
 
-- Papers zijn nog niet aanvaard in een journal maar worden toch al 4 keer geciteerd!!!
+- Papers zijn nog niet aanvaard in een journal maar worden toch al 4 keer geciteerd in papers die reeds zijn gepubliceerd in wetenschappelijke tijdschriften!!!
 
 ---
 
-Drie grote domeinen in statistiek
+Drie grote takken in statistiek
 
 1. Statistische inferentie
 
-  - Data dredging, p-hacking, ...: in grote datasets waar je heel veel hypotheses test vind je vrijwel altijd vrij sterke patronen vinden door toeval $\rightarrow$ Je moet je analyse corrigeren als je meerdere hypotheses test.
+  - Is er een verband tussen COVID-19 en voedselconsumptie?
+  - Gevaar die we opmerkten in studie:
+      - data dredging, p-hacking, ...: in grote datasets waar je heel veel hypotheses test vind je vrijwel altijd vrij sterke patronen vinden door toeval $\rightarrow$ Je moet je analyse corrigeren als je meerdere hypotheses test.
+      - Model aannames niet voldaan
+      - Confounding
 
 2. Studiedesign
 
