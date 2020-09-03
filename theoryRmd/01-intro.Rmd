@@ -41,17 +41,17 @@ Statistische geletterdheid is cruciaal om resultaten en publicaties kritisch te 
 
 https://www.medrxiv.org/content/10.1101/2020.07.17.20155846v1
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/Fonseca2020CovidVegetables.png)
+![](https://github.com/statOmics/sbc20/raw/master/figures/Fonseca2020CovidVegetables.png)
 
 ---
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables6.png){width=70%}
+![](https://github.com/statOmics/sbc20/raw/master/figures/covidVegetables6.png){width=70%}
 
 Nog niet gepubliceerd maar intussen ook geciteerd in 4 gepubliceerde wetenschappelijke artikels
 
 ---
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables.png){width=70%}
+![](https://github.com/statOmics/sbc20/raw/master/figures/covidVegetables.png){width=70%}
 
 "The authors state: The negative ecological association between COVID-19 mortality and the consumption of cabbage and cucumber supports the a priori hypothesis previously reported.
 In this hypothesis, we proposed that vegetables such as Brassica - with an antioxidant activity reducing insulin resistance - may also be associated with low COVID-19 mortality in countries.
@@ -63,11 +63,11 @@ Though our results do not allow to infer causality, they do reinforce our a prio
 
 ---
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables4.png)
+![](https://github.com/statOmics/sbc20/raw/master/figures/covidVegetables4.png)
 
 ---
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables3.png)
+![](https://github.com/statOmics/sbc20/raw/master/figures/covidVegetables3.png)
 
 - Vele hypotheses worden getest ?!
 - Causaliteit ?!
@@ -76,7 +76,7 @@ Though our results do not allow to infer causality, they do reinforce our a prio
 
 ---
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/covidVegetables2.png){width=70%}
+![](https://github.com/statOmics/sbc20/raw/master/figures/covidVegetables2.png){width=70%}
 
 - Belang Data Exploratie!
 - Data toont niet echt een trend

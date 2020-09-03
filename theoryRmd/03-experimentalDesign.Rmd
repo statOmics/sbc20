@@ -122,7 +122,7 @@ text(7.5,.5,"DATA EXPLORATIE &\nBESCHRIJVENDE STATISTIEK (2)",col="black",cex=1.
 
 - De imbalans voor bijvoorbeeld gender kan worden vermeden door gestratificeerde randomisatie: gebalanceerde randomisatie per stratum
 
-![Stratified Randomisatie](https://github.com/statOmics/sbc20/raw/master/theory/figures/stratification.png){ width=50% }
+![Stratified Randomisatie](https://github.com/statOmics/sbc20/raw/master/figures/stratification.png){ width=50% }
 
 ---
 
@@ -132,13 +132,13 @@ text(7.5,.5,"DATA EXPLORATIE &\nBESCHRIJVENDE STATISTIEK (2)",col="black",cex=1.
 
 - dm: diabetic medium, nd: non diabetic medium, co: control
 - 4 bio-repeats, 2 technische repeats/biorep
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/qpcrBadDesign1.png){ width=100% }
+![](https://github.com/statOmics/sbc20/raw/master/figures/qpcrBadDesign1.png){ width=100% }
 
 - dm: diabetic medium, nd: non diabetic medium, co: control
 - 4 bio-reps, 2 techreps/biorep, 2 plates A & B
 - Treatment and plate almost entirely confounded
 
-![](https://github.com/statOmics/sbc20/raw/master/theory/figures/qpcrBadDesign2.png){ width=100% }
+![](https://github.com/statOmics/sbc20/raw/master/figures/qpcrBadDesign2.png){ width=100% }
 
 ## Nature methods: Points of significance - Blocking
 
