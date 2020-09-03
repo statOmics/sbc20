@@ -1,0 +1,25 @@
+In de introductie  gaan we het hebben over het nut van statistiek.
+
+We leven in een tijd van big data.
+
+Er worden heel veel gegevens over ons bijgehouden:
+onze locatie, ons surfgedrag, wat we aankopen, onze activiteit op sociale media
+
+en bovendien hebben doorbraken in de biotechnologie het mogelijk gemaakt om de expressie
+van duizenden genen en eiwitten simultaan te meten in onze weefsels en zelfs op het niveau van onze individuele cellen
+waardoor biologische processen heel nauwkeurig in kaart kunnen worden gebracht.
+
+Anderzijds maakt men in de chemische procesindustrie gebruik van een grote hoeveelheid sensoren om processen te sturen.
+En worden we in de media gebombardeerd met cijfers.
+
+Denk maar aan het dagelijks overzicht van de nieuwe corona besmettingen, ziekenhuisopnames en COVID-19 doden.
+
+Het is in deze tijd dus cruciaal om informatie uit cijfers te kunnen extraheren
+
+En statistiek is nu net de wetenschap om te leren uit empirische gegevens.
+
+Statistische geletterdheid is dus een noodzaak om de resultaten uit deze analyses in wetenschappelijke tijdschriften of in de media kritisch te kunnen interpreteren.
+
+In een boutade wordt vaak gezegd dat men met statistiek alles kan bewijzen.
+
+In deze introductie zullen we dit weerleggen en tonen we aan dat het probleem vooral ligt bij het foute gebruik van statistiek.

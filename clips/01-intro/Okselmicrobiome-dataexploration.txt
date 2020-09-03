@@ -1,0 +1,37 @@
+Eens het experiment is uitgevoerd gaan we eerst het effect van de behandeling bestuderen in de steekproef.
+
+Hiervoor maken we gebruik van het statistische softwarepakket R en lezen we de data in.
+
+Als we naar de data matrix kijken zien we de volgende structuur:
+proefpersonen in de rijen waarvoor we twee karateristieken (variabelen) hebben bijgehouden per subject:
+behandeling (trt) en relatieve abundantie (rel).
+Deze data structuur wordt tidy data genoemd.
+
+Als we staren naar de data matrix is het heel moeilijk om daar structuur in te zien:
+We maken daarom gebruik van een tweede belangrijke tak van de statistiek: Data exploratie en beschrijvende statistiek.
+
+Het effect van de behandeling in de steekproef kan worden gekwantificeerd door de gemiddelde relatieve abundantie te vergelijken in elke steekproef.
+We observeren dat de gemiddelde relatieve abundantie in de steekproef gemiddelde 22 % hoger is in de transplantatie dan in de placebo groep.
+We quantificeren ook de variabiliteit, spreiding van de gegevens rond het gemiddelde aan de hand van de standaardafwijking.
+
+Het gemiddelde en de standaardafwijking wordt ook vaak grafisch weergegeven in een barplot.
+Deze plot is echter niet informatief:
+- We zien enkel een twee punt summary: gemiddelde en sd.
+- Is dat wel een goeie samenvattende maat?
+- Stuk van de plot is niet informatief: waarschijnlijk geen relatieve abundanties van 0 %?
+- We moeten de data zo ruw mogelijk weergegeven.
+
+De boxplot is informatief
+
+- Het geeft een 5 point summary: minimum, 1 ste kwartiel, mediaan, 2de kwartiel, maximum
+- Omdat we maar 10 meetpunten hebben per groep kunnen we ook de ruwe data weergeven.
+- We observeren dat de relatieve abundanties bij bijna alle proefpersonen in de transplantatie groep hoger is dan deze voor de placebo groep.
+- Aanwijzing dat de behandeling werkt
+
+Hoe kunnen we de conclusies uit de steekproef nu veralgemenen naar de populatie toe? (proces van inductie)
+
+- Op basis van de steekproef kunnen we het effect (gemiddeld verschil in relatieve abundantie) schatten in de populatie.
+
+- De prijs die we hiervoor betalen is onzekerheid!
+
+- We kunnen op basis van een steekproef nooit absoluut zeker zijn van onze conclusies.

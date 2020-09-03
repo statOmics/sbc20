@@ -1,0 +1,34 @@
+Om de conclusies uit de steekproef te veralgemenen naar de populatie maken we gebruik van een derde tak van de statistiek:
+Statistische besluitvorming
+
+- Met data kunnen we niet bewijzen dat een behandeling werkt.
+
+- Falsificatie principe van Popper: Data kunnen enkel een hypothese of een theorie ontkrachten.
+
+- Met statistiek kunnen we dus niet aantonen dat de behandeling werkt.
+
+- Statistiek zal ons wel toelaten om het omgekeerde te falsifiëren: als we veronderstellen dat er geen effect van de behandeling, spreekt de data in de steekproef dit tegen?
+
+- Met statistiek kunnen we berekenen hoe waarschijnlijk het is om in een random steekproef (nieuw experiment) een gemiddeld verschil in relatieve abundantie te zien tussen placebo en transplantatiegroep dat minstens 22% bedraagt als de behandeling geen effect zou hebben.
+
+- Die kans wordt een p-waarde genoemd.
+
+- Als p heel klein is, dan is het heel onwaarschijnlijk om een dergelijk effect te observeren in een random steekproef door toeval.
+
+- p wordt meestal vergeleken met 5%. Als er geen effect is van de behandeling dan tolereren 5% vals positieve conclusies.
+
+- Om de kans p te berekenen is het nodig om de data te modelleren met statistische modellen.
+
+
+Statistische toets
+
+In latere hoofdstukken zullen we zien dat we t-test kunnen gebruiken om hetgeen we observeren in de microbiome dataset te veralgemenen naar de populatie.
+
+De p-waarde is kleiner dan 5%.
+Als er in werkelijkheid geen effect is van de behandeling en als de model aannames correct zijn dan verwachten we in minder dan 2 op 10000 random steekproeven een effect dat minstens 22% relatieve abundantie bedraagt door toeval.
+Deze kans is heel klein dus besluiten we dat het heel onwaarschijnlijk is om dergelijk effect in een steekproef te observeren door toeval.
+We concluderen dus dat het effect van de behandeling statistisch significant is.
+
+Conclusie:
+Er is een statistisch significant verschil in gemiddelde relatieve abundantie van Staphylococcus in het okselmicrobiome van personen met een zweetgeur die worden behandeld met de transplantie en deze die behandeld worden met de placebo behandeling.
+Gemiddeld is de relatieve abundantie van Staphylococcus in het microbiome van personen met een zweetgeur 22% hoger na microbiome transplantie dan na de placebo behandeling.

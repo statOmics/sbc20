@@ -1,0 +1,57 @@
+In de eerste case studie over het okselmicrobiome illustreren welke plek de drie takken in de statistiek "Experimenteel design", "data exploratie" en "statistische besluitvorming of inferentie" innemen in empirisch wetenschappelijk onderzoek.
+
+Zweten en vooral een zweetgeur is vervelend.
+Het zweten op zich is niet de oorzaak van de geur.
+Het zijn de microorganismen onder de oksel die het zweet metaboliseren die de geur veroorzaken.
+De gemeenschap van microorganismen onder de oksel wordt ook het oksel microbiome genoemd.
+
+Corynebacterium is een bacterië die zweet metaboliseert en hierbij verzadigde vetzuren aanmaakt met een penetrante geur.
+Gelukkig zijn er ook de Staphylococcus bacteriën die het zweet ook metaboliseren maar hierbij geen hinderlijke verzadigde vetzuren produceren.
+
+Het CMet Lab aan de Universiteit Gent doet onderzoek naar microbiële gemeenschappen en stelde een therapie voor om mensen van dit probleem af te helpen.
+Die bestaat uit een antibiotica behandeling van de oksel om microbiome af te doden,
+gevolgd door een transplantatie van het microbiome van een persoon zonder zweetgeur.
+
+Alvorens dat de therapie breed kan worden ingezet, dient eerst te worden aangetoond in een experiment dat ze werkt.
+
+
+Een eerste tak van de statistiek focust op experimenteel design.
+Idealiter zouden we de therapie evalueren door het uit te testen op de volledige populatie van personen met een zweetgeur.
+Dat is echter niet haalbaar:
+
+1. Ethisch niet verantwoord: we weten niet of therapie werkt
+2. Financieel en logistiek onmogelijk
+3. De populatie waarover we uitspraken wensen te doen bestaat nog niet volledig: ze omvat ook toekomstige personen met een zweetgeur.
+Merk op dat de populatie in de statistiek een theoretisch begrip is dat afwijkt van de term populatie die in de biologie wordt gebruikt.
+
+Daarom zullen we een steekproef nemen.
+Hierbij zullen we een aantal personen uit de populatie selecteren waarop we het experiment uit zullen voeren.
+Cruciaal is dat de steekproef representatief is voor de populatie zodat we de resultaten van het experiment zullen kunnen veralgemenen naar de populatie.
+We zullen de mensen daarom volledig at random trekken uit de populatie zodat elk subject een zelfde kans heeft om in het experiment te worden opgenomen: randomisatie.
+Merk ook op dat het heel belangrijk om de populatie goed te omschrijven voor de start van het experiment: scope van de studie.
+
+In deze studie worden twintig personen met een zweetgeur volledig at random geselecteerd uit de populatie.
+We zouden nu elk subject kunnen behandelen.
+Maar, dan zijn we niet zeker dat een verschil in het microbiome te wijten is aan de behandeling.
+We hebben dus een goeie controle nodig.
+We zouden de controle personen niet kunnen behandelen, maar dan kan een verschil in microbiome mogelijks ook te wijten zijn aan de antibiotica behandeling ipv aan de transplantatie.
+We zullen daarom 10 personen een placebo behandeling geven, enkel antibiotica en 10 personen met antibiotica en de transplantatie.
+We zullen de proef personen ook opnieuw volledig at random toewijzen aan de behandelingsgroep zodat beide groepen vergelijkbaar zijn.
+
+Hoe het microbiome meten?
+
+In de studie maakte men gebruik van een DGGE meting.
+Microorganismen hebben een heel variabel stukje ribosomaal RNA, het 16s ribosomaal RNA dat uniek is voor de soort.
+Het 16S rRNA van de verschillende microorganismen in het staal wordt dan geamplificeerd en gescheiden op een DGGE gel.
+Waarbij een bandenpatroon ontstaat volgens de lengte van het 16s rRNA.
+
+Elke band correspondeert met een bacterie.
+Hoe helderder de band hoe meer van de bacterie in het microbiome.
+Band A staat voor Staphylococcus.
+De ratio van de intensiteit van de band en de totale intensiteit in het bandenpatroon is een proxy voor de relatieve abundantie.
+
+Hoe quantificeren we nu het effect van de behandeling?
+
+We kunnen dit doen door middel van het gemiddeld verschil in relatieve abundantie in Staphylococcus tussen de transplantatie en placebo groep.
+
+Het experiment kan nu worden uitgevoerd.
