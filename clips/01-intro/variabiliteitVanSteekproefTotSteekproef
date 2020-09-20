@@ -40,7 +40,7 @@ Als we heel veel data hebben krijgen we een goed zicht op de verdeling van de ge
 - Dat zal ons toe laten om de data verder samen te vatten door gebruik te maken van twee statistieken: het gemiddelde en de standaard deviatie wat een maat is voor de spreiding van de gegevens rond het gemiddelde.
 
 Vrouwen zijn gemiddeld 161.9 cm en manne 175.8 cm.
-Wat onze intuïtie bevestigd dat mannen gemiddeld groter zijn dan vrouwen.
+Wat onze intuïtie bevestigt dat mannen gemiddeld groter zijn dan vrouwen.
 
 Experiment
 
@@ -77,8 +77,7 @@ Conclusies:
 2. Hierdoor verschillen lengte metingen van steekproef tot steekproef.
 3. Dus ook het geschatte gemiddeldes en standaard deviaties.
 4. Ook onze conclusies zijn onzeker en kunnen wijzigen van steekproef tot steekproef.
-5. Steekproeven waarbij het effect tegengesteld is aan dat in de populatie en waarbij we besluiten dat het verschil significant is, zijn zeldzaam.
-6. Met statistiek controleren we de kans op het trekken foute conclusies.
+5. Met statistiek controleren we de kans op het trekken foute conclusies.
 
 We illustreren dit nu in dmv 10.000 herhaalde steekproeven
 1. In 7057 steekproeven zijn vrouwen gemiddeld significant kleiner dan mannen
