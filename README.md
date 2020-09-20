@@ -1,5 +1,5 @@
 Dit is de cursus site voor [Statistiek](https://statomics.github.io/sbc20) die wordt gebruikt in de opleidingsonderdelen
- [Statistiek (C000337)](https://studiegids.ugent.be/2020/NL/studiefiches/C000337.pdf), [Statistiek (C000340)](https://studiegids.ugent.be/2020/NL/studiefiches/C000340.pdf) en [Inleiding tot de biostatistiek](https://studiegids.ugent.be/2020/NL/studiefiches/D013106.pdf) die worden gedoceerd aan de [Universiteit Gent](www.ugent.be).
+ [Statistiek (C000337)](https://studiegids.ugent.be/2020/NL/studiefiches/C000337.pdf), [Statistiek (C000340)](https://studiegids.ugent.be/2020/NL/studiefiches/C000340.pdf) en [Inleiding tot de biostatistiek](https://studiegids.ugent.be/2020/NL/studiefiches/D013106.pdf) die worden gedoceerd aan de [Universiteit Gent](https://www.ugent.be).
 
 [Boek web page](https://statomics.github.io/sbc20)
 
