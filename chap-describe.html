@@ -24,7 +24,7 @@
 <meta name="author" content="Lieven Clement" />
 
 
-<meta name="date" content="2020-09-20" />
+<meta name="date" content="2020-09-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -946,13 +946,29 @@ originele schaal door er de exponentiële functie van te nemen:</p>
 <li><p>Een verschil van 1 op <span class="math inline">\(\log_2\)</span> schaal betekent een verdubbeling op de originele schaal <span class="math inline">\(FC=2\)</span>.</p></li>
 </ul>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="chap-describe.html#cb157-1" aria-hidden="true"></a>logSummary &lt;-</span>
-<span id="cb157-2"><a href="chap-describe.html#cb157-2" aria-hidden="true"></a>NHANES <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">logMean=</span><span class="kw">mean</span>(BMI <span class="op">%&gt;%</span><span class="st"> </span>log2,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),<span class="dt">sd=</span><span class="kw">sd</span>(BMI <span class="op">%&gt;%</span><span class="st"> </span>log2,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),<span class="dt">mean=</span><span class="kw">mean</span>(BMI,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),<span class="dt">median=</span><span class="kw">median</span>(BMI,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">geoMean=</span><span class="dv">2</span><span class="op">^</span>logMean)</span>
-<span id="cb157-3"><a href="chap-describe.html#cb157-3" aria-hidden="true"></a></span>
-<span id="cb157-4"><a href="chap-describe.html#cb157-4" aria-hidden="true"></a>NHANES <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb157-5"><a href="chap-describe.html#cb157-5" aria-hidden="true"></a><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>BMI <span class="op">%&gt;%</span><span class="st"> </span>log2)) <span class="op">+</span></span>
-<span id="cb157-6"><a href="chap-describe.html#cb157-6" aria-hidden="true"></a><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>..count..),<span class="dt">bins=</span><span class="dv">30</span>) <span class="op">+</span></span>
-<span id="cb157-7"><a href="chap-describe.html#cb157-7" aria-hidden="true"></a><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..)) <span class="op">+</span></span>
-<span id="cb157-8"><a href="chap-describe.html#cb157-8" aria-hidden="true"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun=</span>dnorm,<span class="dt">color=</span><span class="st">&quot;red&quot;</span>,<span class="dt">args=</span><span class="kw">list</span>(<span class="dt">mean=</span>logSummary<span class="op">$</span>logMean, <span class="dt">sd=</span>logSummary<span class="op">$</span>sd))</span></code></pre></div>
+<span id="cb157-2"><a href="chap-describe.html#cb157-2" aria-hidden="true"></a>NHANES <span class="op">%&gt;%</span></span>
+<span id="cb157-3"><a href="chap-describe.html#cb157-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb157-4"><a href="chap-describe.html#cb157-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">summarize</span>(</span>
+<span id="cb157-5"><a href="chap-describe.html#cb157-5" aria-hidden="true"></a>    <span class="dt">logMean =</span> <span class="kw">mean</span>(BMI <span class="op">%&gt;%</span><span class="st"> </span>log2,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb157-6"><a href="chap-describe.html#cb157-6" aria-hidden="true"></a>    <span class="dt">sd =</span> <span class="kw">sd</span>(BMI <span class="op">%&gt;%</span><span class="st"> </span>log2,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb157-7"><a href="chap-describe.html#cb157-7" aria-hidden="true"></a>    <span class="dt">mean =</span> <span class="kw">mean</span>(BMI,<span class="dt">na.rm=</span><span class="ot">TRUE</span>),</span>
+<span id="cb157-8"><a href="chap-describe.html#cb157-8" aria-hidden="true"></a>    <span class="dt">median =</span> <span class="kw">median</span>(BMI,<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span>
+<span id="cb157-9"><a href="chap-describe.html#cb157-9" aria-hidden="true"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb157-10"><a href="chap-describe.html#cb157-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">geoMean=</span><span class="dv">2</span><span class="op">^</span>logMean)</span>
+<span id="cb157-11"><a href="chap-describe.html#cb157-11" aria-hidden="true"></a></span>
+<span id="cb157-12"><a href="chap-describe.html#cb157-12" aria-hidden="true"></a>NHANES <span class="op">%&gt;%</span></span>
+<span id="cb157-13"><a href="chap-describe.html#cb157-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb157-14"><a href="chap-describe.html#cb157-14" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>BMI <span class="op">%&gt;%</span><span class="st"> </span>log2)) <span class="op">+</span></span>
+<span id="cb157-15"><a href="chap-describe.html#cb157-15" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(</span>
+<span id="cb157-16"><a href="chap-describe.html#cb157-16" aria-hidden="true"></a>    <span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>..count..),</span>
+<span id="cb157-17"><a href="chap-describe.html#cb157-17" aria-hidden="true"></a>    <span class="dt">bins=</span><span class="dv">30</span>) <span class="op">+</span></span>
+<span id="cb157-18"><a href="chap-describe.html#cb157-18" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_density</span>() <span class="op">+</span></span>
+<span id="cb157-19"><a href="chap-describe.html#cb157-19" aria-hidden="true"></a><span class="st">  </span><span class="kw">stat_function</span>(<span class="dt">fun=</span>dnorm,</span>
+<span id="cb157-20"><a href="chap-describe.html#cb157-20" aria-hidden="true"></a>    <span class="dt">color=</span><span class="st">&quot;red&quot;</span>,</span>
+<span id="cb157-21"><a href="chap-describe.html#cb157-21" aria-hidden="true"></a>    <span class="dt">args=</span><span class="kw">list</span>(</span>
+<span id="cb157-22"><a href="chap-describe.html#cb157-22" aria-hidden="true"></a>      <span class="dt">mean=</span>logSummary<span class="op">$</span>logMean,</span>
+<span id="cb157-23"><a href="chap-describe.html#cb157-23" aria-hidden="true"></a>      <span class="dt">sd=</span>logSummary<span class="op">$</span>sd)</span>
+<span id="cb157-24"><a href="chap-describe.html#cb157-24" aria-hidden="true"></a>    )</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:histLogBMI"></span>
 <img src="Statistiek_2020_2021_files/figure-html/histLogBMI-1.png" alt="Boxplot van BMI en log(BMI) in de NHANES studie." width="100%" />
 <p class="caption">
@@ -1666,6 +1682,13 @@ uitgezet worden op de Y-as en de tijdstippen op de X-as, en kunnen de
 metingen voor eenzelfde subject worden verbonden met een lijn.</p>
 <p>Een
 voorbeeld hiervan is weergegeven in Figuur <a href="chap-describe.html#fig:captoDot">4.6</a>. De figuur vat de gegevens samen van de captopril studie die de centrale dataset vormt van Hoofdstuk <a href="#chap:besluit"><strong>??</strong></a>. In de studie wenst men het effect van een bloeddrukverlagend geneesmiddel captopril evalueren. Voor elke patiënt in de studie werd de systolische bloeddruk twee keer gemeten: één keer voor en één keer na de behandeling met het bloeddruk verlagende medicijn captopril. In Figuur <a href="chap-describe.html#fig:captoDot">4.6</a> worden de metingen van dezelfde patiënt met een lijntje verbonden. Hierdoor krijgen we een heel duidelijk beeld van de gegevens. Namelijk, we krijgen een sterke indruk dat de bloeddruk daalt na het toedienen van captopril gezien we bijna voor alle patiënten een daling observeren.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="chap-describe.html#cb171-1" aria-hidden="true"></a><span class="co">#Eerst lezen we de data in.</span></span>
+<span id="cb171-2"><a href="chap-describe.html#cb171-2" aria-hidden="true"></a><span class="co">#Deze bevindt zich in de subdirectory dataset</span></span>
+<span id="cb171-3"><a href="chap-describe.html#cb171-3" aria-hidden="true"></a><span class="co">#Het is een tekstbestand waarbij de kolommen van elkaar gescheiden zijn d.m.v comma&#39;s.</span></span>
+<span id="cb171-4"><a href="chap-describe.html#cb171-4" aria-hidden="true"></a><span class="co">#sep=&quot;,&quot;</span></span>
+<span id="cb171-5"><a href="chap-describe.html#cb171-5" aria-hidden="true"></a><span class="co">#De eerste rij bevat de namen van de variabelen</span></span>
+<span id="cb171-6"><a href="chap-describe.html#cb171-6" aria-hidden="true"></a>captopril &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;https://raw.githubusercontent.com/statOmics/sbc20/master/data/captopril.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&quot;,&quot;</span>)</span>
+<span id="cb171-7"><a href="chap-describe.html#cb171-7" aria-hidden="true"></a><span class="kw">head</span>(captopril)</span></code></pre></div>
 <pre><code>##   id SBPb DBPb SBPa DBPa
 ## 1  1  210  130  201  125
 ## 2  2  169  122  165  121
@@ -1673,6 +1696,19 @@ voorbeeld hiervan is weergegeven in Figuur <a href="chap-describe.html#fig:capto
 ## 4  4  160  104  157  106
 ## 5  5  167  112  147  101
 ## 6  6  176  101  145   85</code></pre>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="chap-describe.html#cb173-1" aria-hidden="true"></a>captoprilTidy &lt;-</span>
+<span id="cb173-2"><a href="chap-describe.html#cb173-2" aria-hidden="true"></a><span class="st">  </span>captopril <span class="op">%&gt;%</span></span>
+<span id="cb173-3"><a href="chap-describe.html#cb173-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(type,bp,<span class="op">-</span>id)</span>
+<span id="cb173-4"><a href="chap-describe.html#cb173-4" aria-hidden="true"></a></span>
+<span id="cb173-5"><a href="chap-describe.html#cb173-5" aria-hidden="true"></a>captoprilTidy <span class="op">%&gt;%</span></span>
+<span id="cb173-6"><a href="chap-describe.html#cb173-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(type<span class="op">%in%</span><span class="kw">c</span>(<span class="st">&quot;SBPa&quot;</span>,<span class="st">&quot;SBPb&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb173-7"><a href="chap-describe.html#cb173-7" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">type =</span> <span class="kw">factor</span>(</span>
+<span id="cb173-8"><a href="chap-describe.html#cb173-8" aria-hidden="true"></a>    type,</span>
+<span id="cb173-9"><a href="chap-describe.html#cb173-9" aria-hidden="true"></a>    <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;SBPb&quot;</span>,<span class="st">&quot;SBPa&quot;</span>))</span>
+<span id="cb173-10"><a href="chap-describe.html#cb173-10" aria-hidden="true"></a>    ) <span class="op">%&gt;%</span></span>
+<span id="cb173-11"><a href="chap-describe.html#cb173-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>type,<span class="dt">y=</span>bp)) <span class="op">+</span></span>
+<span id="cb173-12"><a href="chap-describe.html#cb173-12" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">group =</span> id)) <span class="op">+</span></span>
+<span id="cb173-13"><a href="chap-describe.html#cb173-13" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:captoDot"></span>
 <img src="Statistiek_2020_2021_files/figure-html/captoDot-1.png" alt="Dotplot van de systolische bloeddruk in de captopril studie voor en na het toedienen van het bloeddruk verlagend middel captopril." width="100%" />
 <p class="caption">
@@ -1692,62 +1728,62 @@ Figuur 4.6: Dotplot van de systolische bloeddruk in de captopril studie voor en 
 <li>In het ggplot commando de lengte selecteren in de x-as en het gewicht in de y-as.</li>
 <li>Een laag toevoegen d.m.v. <code>geom_point</code> om een scatterplot te bekomen van y i.f.v. x.</li>
 </ol>
-<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="chap-describe.html#cb172-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span></span>
-<span id="cb172-2"><a href="chap-describe.html#cb172-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb172-3"><a href="chap-describe.html#cb172-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Height,<span class="dt">y=</span>Weight)) <span class="op">+</span></span>
-<span id="cb172-4"><a href="chap-describe.html#cb172-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="chap-describe.html#cb174-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span></span>
+<span id="cb174-2"><a href="chap-describe.html#cb174-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb174-3"><a href="chap-describe.html#cb174-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Height,<span class="dt">y=</span>Weight)) <span class="op">+</span></span>
+<span id="cb174-4"><a href="chap-describe.html#cb174-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="Statistiek_2020_2021_files/figure-html/unnamed-chunk-115-1.png" width="672" /></p>
 <p>Er is een duidelijke associatie tussen gewicht en lengte: als de lengte stijgt dan stijgt het gewicht gemiddeld ook. Er is echter veel variabiliteit en ook een indicatie dat het gewicht is scheef verdeeld naar rechts.</p>
 <p>We exploreren eerst de data univariaat: variabele per variabele. Om een histogram en QQ-plot naast elkaar af te beelden slaan we de plots eerst op als een object en maken we gebruik van de <code>grid.arrange</code> functie van het gridExtra package om de plots naast elkaar te plotten.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="chap-describe.html#cb173-1" aria-hidden="true"></a>p1 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb173-2"><a href="chap-describe.html#cb173-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Height)) <span class="op">+</span></span>
-<span id="cb173-3"><a href="chap-describe.html#cb173-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>..count..)) <span class="op">+</span></span>
-<span id="cb173-4"><a href="chap-describe.html#cb173-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Height&quot;</span>) <span class="op">+</span></span>
-<span id="cb173-5"><a href="chap-describe.html#cb173-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;All females in study&quot;</span>) <span class="op">+</span></span>
-<span id="cb173-6"><a href="chap-describe.html#cb173-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..))</span>
-<span id="cb173-7"><a href="chap-describe.html#cb173-7" aria-hidden="true"></a></span>
-<span id="cb173-8"><a href="chap-describe.html#cb173-8" aria-hidden="true"></a>p2 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb173-9"><a href="chap-describe.html#cb173-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">sample=</span>Height)) <span class="op">+</span></span>
-<span id="cb173-10"><a href="chap-describe.html#cb173-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq</span>() <span class="op">+</span></span>
-<span id="cb173-11"><a href="chap-describe.html#cb173-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq_line</span>()</span>
-<span id="cb173-12"><a href="chap-describe.html#cb173-12" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p1,p2,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="Statistiek_2020_2021_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
-<p>De lengte data zijn duidelijk approximatief normaal verdeeld.</p>
-<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="chap-describe.html#cb174-1" aria-hidden="true"></a>p3 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb174-2"><a href="chap-describe.html#cb174-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight)) <span class="op">+</span></span>
-<span id="cb174-3"><a href="chap-describe.html#cb174-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>..count..)) <span class="op">+</span></span>
-<span id="cb174-4"><a href="chap-describe.html#cb174-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Weight&quot;</span>) <span class="op">+</span></span>
-<span id="cb174-5"><a href="chap-describe.html#cb174-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;All females in study&quot;</span>) <span class="op">+</span></span>
-<span id="cb174-6"><a href="chap-describe.html#cb174-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..))</span>
-<span id="cb174-7"><a href="chap-describe.html#cb174-7" aria-hidden="true"></a></span>
-<span id="cb174-8"><a href="chap-describe.html#cb174-8" aria-hidden="true"></a>p4 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb174-9"><a href="chap-describe.html#cb174-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">sample=</span>Weight)) <span class="op">+</span></span>
-<span id="cb174-10"><a href="chap-describe.html#cb174-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq</span>() <span class="op">+</span></span>
-<span id="cb174-11"><a href="chap-describe.html#cb174-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq_line</span>()</span>
-<span id="cb174-12"><a href="chap-describe.html#cb174-12" aria-hidden="true"></a></span>
-<span id="cb174-13"><a href="chap-describe.html#cb174-13" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p3,p4,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="Statistiek_2020_2021_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
-<p>De gewichtsdata zijn inderdaad scheef verdeeld!</p>
-<p>Na log transformatie zijn de gewichtsdata minder scheef, maar nog steeds niet Normaal verdeeld.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="chap-describe.html#cb175-1" aria-hidden="true"></a>p5 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb175-2"><a href="chap-describe.html#cb175-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight<span class="op">%&gt;%</span>log2)) <span class="op">+</span></span>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="chap-describe.html#cb175-1" aria-hidden="true"></a>p1 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb175-2"><a href="chap-describe.html#cb175-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Height)) <span class="op">+</span></span>
 <span id="cb175-3"><a href="chap-describe.html#cb175-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>..count..)) <span class="op">+</span></span>
-<span id="cb175-4"><a href="chap-describe.html#cb175-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Weight (log2)&quot;</span>) <span class="op">+</span></span>
+<span id="cb175-4"><a href="chap-describe.html#cb175-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Height&quot;</span>) <span class="op">+</span></span>
 <span id="cb175-5"><a href="chap-describe.html#cb175-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;All females in study&quot;</span>) <span class="op">+</span></span>
 <span id="cb175-6"><a href="chap-describe.html#cb175-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..))</span>
 <span id="cb175-7"><a href="chap-describe.html#cb175-7" aria-hidden="true"></a></span>
-<span id="cb175-8"><a href="chap-describe.html#cb175-8" aria-hidden="true"></a>p6&lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb175-9"><a href="chap-describe.html#cb175-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">sample=</span>Weight<span class="op">%&gt;%</span>log2)) <span class="op">+</span></span>
+<span id="cb175-8"><a href="chap-describe.html#cb175-8" aria-hidden="true"></a>p2 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb175-9"><a href="chap-describe.html#cb175-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">sample=</span>Height)) <span class="op">+</span></span>
 <span id="cb175-10"><a href="chap-describe.html#cb175-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq</span>() <span class="op">+</span></span>
 <span id="cb175-11"><a href="chap-describe.html#cb175-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq_line</span>()</span>
-<span id="cb175-12"><a href="chap-describe.html#cb175-12" aria-hidden="true"></a></span>
-<span id="cb175-13"><a href="chap-describe.html#cb175-13" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p5,p6,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<span id="cb175-12"><a href="chap-describe.html#cb175-12" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p1,p2,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="Statistiek_2020_2021_files/figure-html/unnamed-chunk-116-1.png" width="672" /></p>
+<p>De lengte data zijn duidelijk approximatief normaal verdeeld.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="chap-describe.html#cb176-1" aria-hidden="true"></a>p3 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb176-2"><a href="chap-describe.html#cb176-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight)) <span class="op">+</span></span>
+<span id="cb176-3"><a href="chap-describe.html#cb176-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>..count..)) <span class="op">+</span></span>
+<span id="cb176-4"><a href="chap-describe.html#cb176-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Weight&quot;</span>) <span class="op">+</span></span>
+<span id="cb176-5"><a href="chap-describe.html#cb176-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;All females in study&quot;</span>) <span class="op">+</span></span>
+<span id="cb176-6"><a href="chap-describe.html#cb176-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..))</span>
+<span id="cb176-7"><a href="chap-describe.html#cb176-7" aria-hidden="true"></a></span>
+<span id="cb176-8"><a href="chap-describe.html#cb176-8" aria-hidden="true"></a>p4 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb176-9"><a href="chap-describe.html#cb176-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">sample=</span>Weight)) <span class="op">+</span></span>
+<span id="cb176-10"><a href="chap-describe.html#cb176-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq</span>() <span class="op">+</span></span>
+<span id="cb176-11"><a href="chap-describe.html#cb176-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq_line</span>()</span>
+<span id="cb176-12"><a href="chap-describe.html#cb176-12" aria-hidden="true"></a></span>
+<span id="cb176-13"><a href="chap-describe.html#cb176-13" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p3,p4,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<p><img src="Statistiek_2020_2021_files/figure-html/unnamed-chunk-117-1.png" width="672" /></p>
+<p>De gewichtsdata zijn inderdaad scheef verdeeld!</p>
+<p>Na log transformatie zijn de gewichtsdata minder scheef, maar nog steeds niet Normaal verdeeld.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="chap-describe.html#cb177-1" aria-hidden="true"></a>p5 &lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb177-2"><a href="chap-describe.html#cb177-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Weight<span class="op">%&gt;%</span>log2)) <span class="op">+</span></span>
+<span id="cb177-3"><a href="chap-describe.html#cb177-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density.., <span class="dt">fill=</span>..count..)) <span class="op">+</span></span>
+<span id="cb177-4"><a href="chap-describe.html#cb177-4" aria-hidden="true"></a><span class="st">   </span><span class="kw">xlab</span>(<span class="st">&quot;Weight (log2)&quot;</span>) <span class="op">+</span></span>
+<span id="cb177-5"><a href="chap-describe.html#cb177-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;All females in study&quot;</span>) <span class="op">+</span></span>
+<span id="cb177-6"><a href="chap-describe.html#cb177-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_density</span>(<span class="kw">aes</span>(<span class="dt">y=</span>..density..))</span>
+<span id="cb177-7"><a href="chap-describe.html#cb177-7" aria-hidden="true"></a></span>
+<span id="cb177-8"><a href="chap-describe.html#cb177-8" aria-hidden="true"></a>p6&lt;-<span class="st"> </span>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb177-9"><a href="chap-describe.html#cb177-9" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">sample=</span>Weight<span class="op">%&gt;%</span>log2)) <span class="op">+</span></span>
+<span id="cb177-10"><a href="chap-describe.html#cb177-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq</span>() <span class="op">+</span></span>
+<span id="cb177-11"><a href="chap-describe.html#cb177-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_qq_line</span>()</span>
+<span id="cb177-12"><a href="chap-describe.html#cb177-12" aria-hidden="true"></a></span>
+<span id="cb177-13"><a href="chap-describe.html#cb177-13" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p5,p6,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
 <p><img src="Statistiek_2020_2021_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
 <p>De scheefheid is er nog maar is sterk gereduceerd. We maken nu een plot van lengte in functie van het log<span class="math inline">\(_2\)</span> getransformeerde gewicht.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="chap-describe.html#cb176-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb176-2"><a href="chap-describe.html#cb176-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Height,<span class="dt">y=</span>Weight <span class="op">%&gt;%</span><span class="st"> </span>log2)) <span class="op">+</span></span>
-<span id="cb176-3"><a href="chap-describe.html#cb176-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Weight (log2)&quot;</span>) <span class="op">+</span></span>
-<span id="cb176-4"><a href="chap-describe.html#cb176-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="chap-describe.html#cb178-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb178-2"><a href="chap-describe.html#cb178-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Height,<span class="dt">y=</span>Weight <span class="op">%&gt;%</span><span class="st"> </span>log2)) <span class="op">+</span></span>
+<span id="cb178-3"><a href="chap-describe.html#cb178-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Weight (log2)&quot;</span>) <span class="op">+</span></span>
+<span id="cb178-4"><a href="chap-describe.html#cb178-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="Statistiek_2020_2021_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
 <p>We introduceren nu een statistiek om de associatie te schatten: de correlatie.</p>
 <!---break-->
@@ -1773,7 +1809,7 @@ Figuur 4.6: Dotplot van de systolische bloeddruk in de captopril studie voor en 
 <p><span class="math display">\[
 \mbox{Cor}(X,Y)=\frac{\sum_{i=1}^{n}(x_{i}-\bar{x})(y_{i}-\bar{y})}{(n-1)s_{x}s_{y}}
 \]</span></p>
-<p>We vervangen de verwachte waarden weer door het steekproefgemiddelden <span class="math inline">\(\bar x\)</span> en $y, en, we berekenen het gemiddeld product van de afwijkingen in x en y in de steekproef. Let op dat we hierbij weer corrigeren voor het aantal vrijheidsgraden. We geven elke observatie geen gewicht van 1/n maar van 1/(n-1). We hebben inderdaad het gemiddelde geschat, hier is dat gemiddelde bivariaat (het heeft een x en y coordinaat).</p>
+<p>We vervangen de verwachte waarden weer door het steekproefgemiddelden <span class="math inline">\(\bar x\)</span> en <span class="math inline">\(\bar y\)</span>, en, we berekenen het gemiddeld product van de afwijkingen in x en y in de steekproef. Let op dat we hierbij weer corrigeren voor het aantal vrijheidsgraden. We geven elke observatie geen gewicht van 1/n maar van 1/(n-1). We hebben inderdaad het gemiddelde geschat, hier is dat gemiddelde bivariaat (het heeft een x en y coordinaat).</p>
 <p>Deze schatter wordt ook wel de Pearson correlatie genoemd en heeft volgende eigenschappen:</p>
 <ul>
 <li><p>Er is een positieve correlatie wanneer <span class="math inline">\(y\)</span> gemiddeld toeneemt bij een toename van: <span class="math inline">\(x \ \nearrow \ \Rightarrow \ y \ \nearrow\)</span></p></li>
@@ -1788,12 +1824,12 @@ Figuur 4.7: Bijdrage van individuele metingen in de correlatie.
 </p>
 </div>
 <p>We berekenen vervolgens de correlatie voor lengte, gewicht en het log getransformeerde gewicht.</p>
-<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="chap-describe.html#cb177-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span></span>
-<span id="cb177-2"><a href="chap-describe.html#cb177-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb177-3"><a href="chap-describe.html#cb177-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(Weight,Height) <span class="op">%&gt;%</span></span>
-<span id="cb177-4"><a href="chap-describe.html#cb177-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log2Weight=</span>Weight<span class="op">%&gt;%</span>log2) <span class="op">%&gt;%</span></span>
-<span id="cb177-5"><a href="chap-describe.html#cb177-5" aria-hidden="true"></a><span class="st">  </span>na.exclude <span class="op">%&gt;%</span></span>
-<span id="cb177-6"><a href="chap-describe.html#cb177-6" aria-hidden="true"></a><span class="st">  </span>cor</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="chap-describe.html#cb179-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span></span>
+<span id="cb179-2"><a href="chap-describe.html#cb179-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb179-3"><a href="chap-describe.html#cb179-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(Weight,Height) <span class="op">%&gt;%</span></span>
+<span id="cb179-4"><a href="chap-describe.html#cb179-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log2Weight=</span>Weight<span class="op">%&gt;%</span>log2) <span class="op">%&gt;%</span></span>
+<span id="cb179-5"><a href="chap-describe.html#cb179-5" aria-hidden="true"></a><span class="st">  </span>na.exclude <span class="op">%&gt;%</span></span>
+<span id="cb179-6"><a href="chap-describe.html#cb179-6" aria-hidden="true"></a><span class="st">  </span>cor</span></code></pre></div>
 <pre><code>##               Weight    Height log2Weight
 ## Weight     1.0000000 0.2845792  0.9811638
 ## Height     0.2845792 1.0000000  0.3074578
@@ -1807,19 +1843,19 @@ Figuur 4.7: Bijdrage van individuele metingen in de correlatie.
 <div id="impact-van-outliers" class="section level4" number="4.7.2.1">
 <h4><span class="header-section-number">4.7.2.1</span> Impact van outliers</h4>
 <p>In figuur <a href="chap-describe.html#fig:corOutlier">4.8</a> wordt de impact van outliers op de Pearson correlatie geïllustreerd d.m.v. gesimuleerde data met één outlier. We zien dat de correlatie bijna halveert ten gevolge van de outlier!</p>
-<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="chap-describe.html#cb179-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">100</span>)</span>
-<span id="cb179-2"><a href="chap-describe.html#cb179-2" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>)</span>
-<span id="cb179-3"><a href="chap-describe.html#cb179-3" aria-hidden="true"></a>simData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>x<span class="op">*</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(x)))</span>
-<span id="cb179-4"><a href="chap-describe.html#cb179-4" aria-hidden="true"></a>p1 &lt;-<span class="st"> </span>simData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y)) <span class="op">+</span></span>
-<span id="cb179-5"><a href="chap-describe.html#cb179-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb179-6"><a href="chap-describe.html#cb179-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">&quot;cor =&quot;</span>,<span class="kw">cor</span>(simData[,<span class="dv">1</span>],simData[,<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(.,<span class="dv">2</span>)))</span>
-<span id="cb179-7"><a href="chap-describe.html#cb179-7" aria-hidden="true"></a></span>
-<span id="cb179-8"><a href="chap-describe.html#cb179-8" aria-hidden="true"></a>outlier&lt;-<span class="st"> </span><span class="kw">rbind</span>(simData,<span class="kw">c</span>(<span class="dv">2</span>,<span class="op">-</span><span class="dv">4</span>))</span>
-<span id="cb179-9"><a href="chap-describe.html#cb179-9" aria-hidden="true"></a>p2 &lt;-<span class="st"> </span>outlier <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y)) <span class="op">+</span></span>
-<span id="cb179-10"><a href="chap-describe.html#cb179-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb179-11"><a href="chap-describe.html#cb179-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">&quot;cor =&quot;</span>,<span class="kw">cor</span>(outlier[,<span class="dv">1</span>],outlier[,<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(.,<span class="dv">2</span>)))</span>
-<span id="cb179-12"><a href="chap-describe.html#cb179-12" aria-hidden="true"></a></span>
-<span id="cb179-13"><a href="chap-describe.html#cb179-13" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p1,p2,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="chap-describe.html#cb181-1" aria-hidden="true"></a><span class="kw">set.seed</span>(<span class="dv">100</span>)</span>
+<span id="cb181-2"><a href="chap-describe.html#cb181-2" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>)</span>
+<span id="cb181-3"><a href="chap-describe.html#cb181-3" aria-hidden="true"></a>simData &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>x<span class="op">*</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(x)))</span>
+<span id="cb181-4"><a href="chap-describe.html#cb181-4" aria-hidden="true"></a>p1 &lt;-<span class="st"> </span>simData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y)) <span class="op">+</span></span>
+<span id="cb181-5"><a href="chap-describe.html#cb181-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb181-6"><a href="chap-describe.html#cb181-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">&quot;cor =&quot;</span>,<span class="kw">cor</span>(simData[,<span class="dv">1</span>],simData[,<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(.,<span class="dv">2</span>)))</span>
+<span id="cb181-7"><a href="chap-describe.html#cb181-7" aria-hidden="true"></a></span>
+<span id="cb181-8"><a href="chap-describe.html#cb181-8" aria-hidden="true"></a>outlier&lt;-<span class="st"> </span><span class="kw">rbind</span>(simData,<span class="kw">c</span>(<span class="dv">2</span>,<span class="op">-</span><span class="dv">4</span>))</span>
+<span id="cb181-9"><a href="chap-describe.html#cb181-9" aria-hidden="true"></a>p2 &lt;-<span class="st"> </span>outlier <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y)) <span class="op">+</span></span>
+<span id="cb181-10"><a href="chap-describe.html#cb181-10" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb181-11"><a href="chap-describe.html#cb181-11" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">&quot;cor =&quot;</span>,<span class="kw">cor</span>(outlier[,<span class="dv">1</span>],outlier[,<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(.,<span class="dv">2</span>)))</span>
+<span id="cb181-12"><a href="chap-describe.html#cb181-12" aria-hidden="true"></a></span>
+<span id="cb181-13"><a href="chap-describe.html#cb181-13" aria-hidden="true"></a><span class="kw">grid.arrange</span>(p1,p2,<span class="dt">ncol=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:corOutlier"></span>
 <img src="Statistiek_2020_2021_files/figure-html/corOutlier-1.png" alt="Correlatie van gesimuleerde data met 1 outlier" width="672" />
 <p class="caption">
@@ -1830,13 +1866,13 @@ Figuur 4.8: Correlatie van gesimuleerde data met 1 outlier
 <div id="de-pearson-correlatie-pikt-enkel-linear-associatie-op" class="section level4" number="4.7.2.2">
 <h4><span class="header-section-number">4.7.2.2</span> De Pearson correlatie pikt enkel linear associatie op</h4>
 <p>In figuur <a href="chap-describe.html#fig:corQuad">4.9</a> simuleren we data met een kwadratisch verband en observeren we dat de correlatie bijna nul is!</p>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="chap-describe.html#cb180-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb180-2"><a href="chap-describe.html#cb180-2" aria-hidden="true"></a>quadratic &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(x)))</span>
-<span id="cb180-3"><a href="chap-describe.html#cb180-3" aria-hidden="true"></a>quadratic <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y)) <span class="op">+</span></span>
-<span id="cb180-4"><a href="chap-describe.html#cb180-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb180-5"><a href="chap-describe.html#cb180-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">&quot;cor =&quot;</span>,<span class="kw">cor</span>(quadratic[,<span class="dv">1</span>],quadratic[,<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(.,<span class="dv">2</span>))) <span class="op">+</span></span>
-<span id="cb180-6"><a href="chap-describe.html#cb180-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(quadratic[,<span class="dv">2</span>]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
-<span id="cb180-7"><a href="chap-describe.html#cb180-7" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(quadratic[,<span class="dv">1</span>]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="chap-describe.html#cb182-1" aria-hidden="true"></a>x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb182-2"><a href="chap-describe.html#cb182-2" aria-hidden="true"></a>quadratic &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>x<span class="op">^</span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(x)))</span>
+<span id="cb182-3"><a href="chap-describe.html#cb182-3" aria-hidden="true"></a>quadratic <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>x,<span class="dt">y=</span>y)) <span class="op">+</span></span>
+<span id="cb182-4"><a href="chap-describe.html#cb182-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb182-5"><a href="chap-describe.html#cb182-5" aria-hidden="true"></a><span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">&quot;cor =&quot;</span>,<span class="kw">cor</span>(quadratic[,<span class="dv">1</span>],quadratic[,<span class="dv">2</span>]) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">round</span>(.,<span class="dv">2</span>))) <span class="op">+</span></span>
+<span id="cb182-6"><a href="chap-describe.html#cb182-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="kw">mean</span>(quadratic[,<span class="dv">2</span>]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>) <span class="op">+</span></span>
+<span id="cb182-7"><a href="chap-describe.html#cb182-7" aria-hidden="true"></a><span class="st">    </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(quadratic[,<span class="dv">1</span>]),<span class="dt">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
 <div class="figure"><span id="fig:corQuad"></span>
 <img src="Statistiek_2020_2021_files/figure-html/corQuad-1.png" alt="Correlatie van gesimuleerde data met een kwadratisch verband. De data in de bovenste kwadranten compenseren elkaar als het ware alsook in de onderste kwadranten (ongeveer evenveel positieve en negatieve bijdragen door de data in de correlatie)" width="672" />
 <p class="caption">
@@ -1856,32 +1892,32 @@ Figuur 4.9: Correlatie van gesimuleerde data met een kwadratisch verband. De dat
 <ul>
 <li>Pearson correlatie</li>
 </ul>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="chap-describe.html#cb181-1" aria-hidden="true"></a><span class="kw">cor</span>(outlier)</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="chap-describe.html#cb183-1" aria-hidden="true"></a><span class="kw">cor</span>(outlier)</span></code></pre></div>
 <pre><code>##           x         y
 ## x 1.0000000 0.4682823
 ## y 0.4682823 1.0000000</code></pre>
 <ul>
 <li>Spearman correlatie</li>
 </ul>
-<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="chap-describe.html#cb183-1" aria-hidden="true"></a><span class="kw">cor</span>(outlier,<span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="chap-describe.html#cb185-1" aria-hidden="true"></a><span class="kw">cor</span>(outlier,<span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
 <pre><code>##           x         y
 ## x 1.0000000 0.6571429
 ## y 0.6571429 1.0000000</code></pre>
 <p>We verifiëren dat de Spearman correlatie de Pearson correlatie is van rang getransformeerde data. Die wordt bekomen door de observaties te ordenen van klein naar groot en elke observatie te vervangen door zijn rangorde.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="chap-describe.html#cb185-1" aria-hidden="true"></a>rankData&lt;-<span class="kw">apply</span>(outlier,<span class="dv">2</span>,rank)</span>
-<span id="cb185-2"><a href="chap-describe.html#cb185-2" aria-hidden="true"></a><span class="kw">cor</span>(rankData)</span></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="chap-describe.html#cb187-1" aria-hidden="true"></a>rankData&lt;-<span class="kw">apply</span>(outlier,<span class="dv">2</span>,rank)</span>
+<span id="cb187-2"><a href="chap-describe.html#cb187-2" aria-hidden="true"></a><span class="kw">cor</span>(rankData)</span></code></pre></div>
 <pre><code>##           x         y
 ## x 1.0000000 0.6571429
 ## y 0.6571429 1.0000000</code></pre>
 <p>We berekenen nu de Spearman correlatie in de NHANES studie.
 We observeren dat de correlatie tussen lengte en gewicht, en lengte en log2 getransformeerd gewicht exact gelijk is.
 Dat is logisch want de log-transformatie is een monotone transformatie en verandert de ordening van de data dus niet, de ranks van gewicht en deze van het log gewicht zijn identiek!</p>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="chap-describe.html#cb187-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span></span>
-<span id="cb187-2"><a href="chap-describe.html#cb187-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb187-3"><a href="chap-describe.html#cb187-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(Weight,Height) <span class="op">%&gt;%</span></span>
-<span id="cb187-4"><a href="chap-describe.html#cb187-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log2Weight=</span>Weight<span class="op">%&gt;%</span>log2) <span class="op">%&gt;%</span></span>
-<span id="cb187-5"><a href="chap-describe.html#cb187-5" aria-hidden="true"></a><span class="st">  </span>na.exclude <span class="op">%&gt;%</span></span>
-<span id="cb187-6"><a href="chap-describe.html#cb187-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">cor</span>(<span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="chap-describe.html#cb189-1" aria-hidden="true"></a>NHANES<span class="op">%&gt;%</span></span>
+<span id="cb189-2"><a href="chap-describe.html#cb189-2" aria-hidden="true"></a><span class="st">  </span><span class="kw">filter</span>(Age <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>Gender<span class="op">==</span><span class="st">&quot;female&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb189-3"><a href="chap-describe.html#cb189-3" aria-hidden="true"></a><span class="st">  </span><span class="kw">select</span>(Weight,Height) <span class="op">%&gt;%</span></span>
+<span id="cb189-4"><a href="chap-describe.html#cb189-4" aria-hidden="true"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">log2Weight=</span>Weight<span class="op">%&gt;%</span>log2) <span class="op">%&gt;%</span></span>
+<span id="cb189-5"><a href="chap-describe.html#cb189-5" aria-hidden="true"></a><span class="st">  </span>na.exclude <span class="op">%&gt;%</span></span>
+<span id="cb189-6"><a href="chap-describe.html#cb189-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">cor</span>(<span class="dt">method=</span><span class="st">&quot;spearman&quot;</span>)</span></code></pre></div>
 <pre><code>##               Weight    Height log2Weight
 ## Weight     1.0000000 0.2892776  1.0000000
 ## Height     0.2892776 1.0000000  0.2892776
