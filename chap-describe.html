@@ -10,16 +10,16 @@
 
   <meta property="og:title" content="Hoofdstuk 4 Data exploratie en beschrijvende statistiek | Cursus Statistiek 2020-2021" />
   <meta property="og:type" content="book" />
-  
-  
+
+
   <meta property="og:description" content="Basiscursus Statistiek voor de 2de Bachelor of Science in de Biologie, - in de Biochemie &amp; de Biotechnologie, - in de Biomedische Wetenschappen, en - in de Chemie" />
   <meta name="github-repo" content="statOmics/statistiek2deBach" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Hoofdstuk 4 Data exploratie en beschrijvende statistiek | Cursus Statistiek 2020-2021" />
-  
+
   <meta name="twitter:description" content="Basiscursus Statistiek voor de 2de Bachelor of Science in de Biologie, - in de Biochemie &amp; de Biotechnologie, - in de Biomedische Wetenschappen, en - in de Chemie" />
-  
+
 
 <meta name="author" content="Lieven Clement" />
 
@@ -29,8 +29,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
+
+
 <link rel="prev" href="chap-design.html"/>
 
 <script src="libs/header-attrs-2.3/header-attrs.js"></script>
@@ -595,8 +595,8 @@ de data set, extreem zijn, buitenbeentjes.</p>
 <span id="cb142-14"><a href="chap-describe.html#cb142-14" aria-hidden="true"></a></span>
 <span id="cb142-15"><a href="chap-describe.html#cb142-15" aria-hidden="true"></a>tab &lt;-<span class="st"> </span><span class="kw">table</span>(NHANES<span class="op">$</span>Gender)</span>
 <span id="cb142-16"><a href="chap-describe.html#cb142-16" aria-hidden="true"></a>tab</span></code></pre></div>
-<pre><code>## 
-## female   male 
+<pre><code>##
+## female   male
 ##   5020   4980</code></pre>
 <p>We maken nu een barplot voor de variabele gender</p>
 <ol style="list-style-type: decimal">
@@ -624,9 +624,9 @@ waarden hoogstens 1 keer voorkomen. Het <em>tak-en-blad diagram</em> (in het
 Engels: <em>stem and leaf plot</em> is een middel om toch nog alle
 uitkomsten weer te geven. Een voorbeeld is weergegeven in onderstaande R-output voor het BMI in de NHANES studie.</p>
 <div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="chap-describe.html#cb145-1" aria-hidden="true"></a><span class="kw">stem</span>(NHANES<span class="op">$</span>BMI)</span></code></pre></div>
-<pre><code>## 
+<pre><code>##
 ##   The decimal point is 1 digit(s) to the right of the |
-## 
+##
 ##   1 | 33333333333333333344444444444444444444444444444444444444444444444444+37
 ##   1 | 55555555555555555555555555555555555555555555555555555555555555555555+1389
 ##   2 | 00000000000000000000000000000000000000000000000000000000000000000000+2264
@@ -639,8 +639,8 @@ uitkomsten weer te geven. Een voorbeeld is weergegeven in onderstaande R-output 
 ##   5 | 5556677777789999
 ##   6 | 133444
 ##   6 | 567899
-##   7 | 
-##   7 | 
+##   7 |
+##   7 |
 ##   8 | 111</code></pre>
 <p>Hier wordt van alle uitkomsten het eerste cijfer of de eerste paar cijfers
 op een verticale lijn in volgorde uitgezet in de vorm van een boomstam.
@@ -720,7 +720,7 @@ observaties aan voldoen neemt men vaak het gemiddelde van die waarden.</p>
 <p><strong>Einde definitie</strong></p>
 <p>In R kunnen die als volgt worden bekomen</p>
 <div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="chap-describe.html#cb148-1" aria-hidden="true"></a><span class="kw">quantile</span>(NHANES<span class="op">$</span>BMI,<span class="kw">c</span>(<span class="fl">0.25</span>,.<span class="dv">5</span>,.<span class="dv">75</span>),<span class="dt">na.rm=</span><span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>##   25%   50%   75% 
+<pre><code>##   25%   50%   75%
 ## 21.58 25.98 30.89</code></pre>
 <div class="figure" style="text-align: center"><span id="fig:boxBMI"></span>
 <img src="Statistiek_2020_2021_files/figure-html/boxBMI-1.png" alt="Boxplot van BMI in de NHANES studie." width="100%" />
@@ -914,7 +914,7 @@ symmetrisch verdeeld zijn.</li>
 transformatie van de gegevens vaak nuttig om de scheefheid weg te nemen. In
 dit geval is vooral het <em>geometrisch gemiddelde</em> interessant.</p>
 <!---break-->
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ocyVVNvR-x8" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lkKz_PAXab8" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 
 <div class="definition">
@@ -1789,7 +1789,7 @@ Figuur 4.6: Dotplot van de systolische bloeddruk in de captopril studie voor en 
 <!---break-->
 <div id="covariantie-en-correlatie" class="section level3" number="4.7.1">
 <h3><span class="header-section-number">4.7.1</span> Covariantie en Correlatie</h3>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CZZeABbFpcY" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2BqZG9Plp-0" frameborder="0" style="display: block; margin: auto;" allow="autoplay; encrypted-media" allowfullscreen>
 </iframe>
 <p>Stel dat X en Y continue toevallig veranderlijken zijn</p>
 <ul>
